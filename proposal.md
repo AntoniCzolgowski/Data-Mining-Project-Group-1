@@ -1,6 +1,7 @@
 # Project Proposal - Milestone 0
 
 **Group Number:** 01
+
 **Team Members:** Antoni Czolgowski, Sam Goodell, Will Creager  
 
 
@@ -44,3 +45,4 @@
    - What: 
    - Impact: 
    - Mitigation:
+

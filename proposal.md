@@ -31,12 +31,12 @@
 
 ## 3. Potential Bias/Limitations
 
-1. **[Bias/Limitation 1]**
+1. **Favoritism towards a particular candidate**
    - What: 
    - Impact: 
    - Mitigation: 
 
-2. **[Bias/Limitation 2]**
+2. **Granularity of voting data**
    - What: 
    - Impact: 
    - Mitigation: 
@@ -45,4 +45,5 @@
    - What: 
    - Impact: 
    - Mitigation:
+
 

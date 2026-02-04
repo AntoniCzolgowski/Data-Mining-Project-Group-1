@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Project Proposal Overview - Data Mining Project - CU Boulder CSCI 5502">
+  <meta name="authors" content="Sam Goodell, Will Creager, Antoni Czolgowski">
+  <title>Proposal | Swing State Election Analysis</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- Header & Navigation -->
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <div>
+          <div class="logo-text">Swing State Analysis</div>
+          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+        </div>
+      </div>
+      
+      <nav class="nav">
+        <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Introduction</a></li>
+          <li><a href="team.html" class="nav-link">Team</a></li>
+          <li><a href="proposal.html" class="nav-link active">Proposal</a></li>
+          <li><a href="eda.html" class="nav-link disabled">Data & EDA</a></li>
+          <li><a href="methods.html" class="nav-link disabled">Methods</a></li>
+          <li><a href="results.html" class="nav-link disabled">Results</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Proposal Overview</h1>
+      <p class="hero-subtitle">Quick Reference Guide</p>
+      <p>A summarized view of our research topic, scope, methodology, and key questions.</p>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Research Topic -->
+    <section class="section">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Research Topic</h3>
+          <ul class="bullet-list">
+            <li>Analysis of swing-state county-level voting patterns in Presidential elections (2016-2024)</li>
+            <li>Focus on Pennsylvania, Michigan, and North Carolina as high-leverage Electoral states</li>
+            <li>Integration of election results with census demographics to understand voter behavior</li>
+            <li>Identification of counties with highest electoral volatility between major parties</li>
+          </ul>
+        </div>
+        
+        <div class="proposal-section">
+          <h3>Project Goals</h3>
+          <ul class="bullet-list">
+            <li>Develop a model that identifies swing-state counties with largest voting pattern fluctuations</li>
+            <li>Identify demographic characteristics that correlate with electoral volatility</li>
+            <li>Uncover combinations of socio-economic traits that characterize high-volatility electorates</li>
+            <li>Provide actionable insights for political strategists and campaign managers</li>
+          </ul>
+        </div>
+        
+        <div class="proposal-section">
+          <h3>Scope</h3>
+          <ul class="bullet-list">
+            <li><strong>Geographic:</strong> Three swing states — Pennsylvania, Michigan, North Carolina</li>
+            <li><strong>Temporal:</strong> Presidential elections from 2016 to 2024 (three election cycles)</li>
+            <li><strong>Granularity:</strong> County-level analysis (~250+ counties across three states)</li>
+            <li><strong>Data types:</strong> Election returns, demographic census data, derived volatility metrics</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Data Sources -->
+    <section class="section section-alt">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Data Sources</h3>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Dataset</th>
+                <th>Provider</th>
+                <th>Size Estimate</th>
+                <th>Key Variables</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>County Presidential Election Returns</strong></td>
+                <td>MIT Election Data & Science Lab / Harvard Dataverse</td>
+                <td>~94,000 rows, 12 columns</td>
+                <td>county_fips, candidatevotes, totalvotes, party, year</td>
+              </tr>
+              <tr>
+                <td><strong>County-Level Demographics</strong></td>
+                <td>IPUMS NHGIS (University of Minnesota)</td>
+                <td>~3,200 counties × 16 years × 50-100 variables</td>
+                <td>Education, income, race/ethnicity, age, population density</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+        
+        <div class="proposal-section">
+          <h3>Access & Constraints</h3>
+          <ul class="bullet-list">
+            <li><strong>MIT Election Data:</strong> Free download, CSV format, no login required</li>
+            <li><strong>IPUMS NHGIS:</strong> Free for academic use, requires account registration, data selected via web GUI</li>
+            <li>All datasets are publicly accessible and appropriate for academic research</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Methodology -->
+    <section class="section">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Methodology</h3>
+          <ul class="bullet-list">
+            <li><strong>K-Means Clustering:</strong> Group counties with similar demographic profiles and voting patterns</li>
+            <li><strong>Association Rule Mining:</strong> Discover combinations of traits that characterize swing counties</li>
+            <li><strong>Volatility Metrics:</strong> Calculate vote margin changes between consecutive elections</li>
+            <li><strong>Feature Engineering:</strong> Derive swing indicators and demographic interaction terms</li>
+          </ul>
+        </div>
+        
+        <div class="proposal-section">
+          <h3>Expected Outputs</h3>
+          <ul class="bullet-list">
+            <li>Interactive maps showing county-level voting patterns and volatility</li>
+            <li>Cluster profiles describing characteristics of different voter groups</li>
+            <li>Association rules linking demographic factors to electoral behavior</li>
+            <li>Ranked list of high-opportunity counties for Democratic engagement</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Research Questions Summary -->
+    <section class="section section-blue">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Research Questions Summary</h3>
+          <ul class="bullet-list">
+            <li>Which counties exhibit highest voting volatility (2016-2024)?</li>
+            <li>What demographics correlate with electoral volatility?</li>
+            <li>Can we identify distinct clusters of swing counties?</li>
+            <li>What socio-economic factors predict party preference changes?</li>
+            <li>How does population density relate to volatility?</li>
+            <li>Are volatility drivers different across PA, MI, and NC?</li>
+            <li>What role does education play in voting shifts?</li>
+            <li>Can association rules identify "swing county profiles"?</li>
+            <li>How do economic indicators relate to voting changes?</li>
+            <li>Which high-volatility counties offer greatest opportunity?</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Potential Bias & Limitations -->
+    <section class="section">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Potential Bias & Limitations</h3>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Limitation</th>
+                <th>Impact</th>
+                <th>Mitigation Strategy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ecological Fallacy</strong></td>
+                <td>Using county demographics as proxy for individual voting behavior may identify trends that don't exist at individual level</td>
+                <td>Seek additional data sources that break down voting habits by demographics; interpret findings carefully</td>
+              </tr>
+              <tr>
+                <td><strong>Temporal Drift</strong></td>
+                <td>2016 and 2020 data may be less predictive than 2024 data due to changing political landscape</td>
+                <td>Weight 2024 data more heavily in models; test temporal stability of patterns</td>
+              </tr>
+              <tr>
+                <td><strong>Limited Geographic Scope</strong></td>
+                <td>Focus on three states may miss relevant patterns in other swing states or emerging battlegrounds</td>
+                <td>Acknowledge limitations; design methodology that can be extended to other states</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Timeline -->
+    <section class="section section-alt">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Project Timeline</h3>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Milestone</th>
+                <th>Deliverables</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Milestone 0</strong></td>
+                <td>Project Proposal (Approved ✓)</td>
+                <td>January 29, 2026</td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 1</strong></td>
+                <td>Project Framing & Website Launch</td>
+                <td>February 6, 2026</td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 2</strong></td>
+                <td>Data Collection & Exploratory Analysis</td>
+                <td>TBD</td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 3</strong></td>
+                <td>Methods & Model Development</td>
+                <td>TBD</td>
+              </tr>
+              <tr>
+                <td><strong>Milestone 4</strong></td>
+                <td>Conclusion, Results & Final Report</td>
+                <td>April 17, 2026</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+        
+      </div>
+    </section>
+    
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-text">
+        &copy; 2026 Group 1 | <a href="https://github.com/AntoniCzolgowski/Data-Mining-Project-Group-1" target="_blank">GitHub Repository</a>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Introduction</a>
+        <a href="team.html">Team</a>
+        <a href="proposal.html">Proposal</a>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>

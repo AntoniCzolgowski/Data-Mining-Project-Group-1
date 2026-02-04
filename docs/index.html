@@ -60,25 +60,13 @@
         
         <div class="content-block">
           <p>
-            Recent elections at the national level of US government have resulted in poor outcomes for the Democratic party, illustrated by their current absence in the White House and minority status in both houses of Congress. The 2028 Presidential election offers an opportunity to reverse this trend; however, in a polarized political climate, success requires the identification and understanding of the electorate factions that tend to decide national elections within the highest-leverage Electoral states.
-          </p>
-          <p>
-            Our goal is to address this challenge by developing a model that identifies the swing-state counties with largest and most impactful fluctuations in voting patterns between major political parties. Through the integration and analysis of historical Presidential election results (2016-2024) and county-level census demographics (Pennsylvania, Michigan, & North Carolina), we aim to identify counties that offer a combination of likelihood and opportunity for Democrats, as well as the types of voters that contribute to this elasticity.
-          </p>
-          <p>
-            This research is significant because it provides actionable insights for political strategists, campaign managers, and policy researchers who seek to understand the demographic and geographic factors that drive electoral volatility. By identifying high-leverage counties and the characteristics of swing voters, campaigns can more effectively allocate resources and tailor their messaging to the constituencies most likely to determine election outcomes.
-          </p>
-          <p>
-            The beneficiaries of this research extend beyond political campaigns to include journalists covering elections, academic researchers studying American political behavior, and citizens seeking to understand the dynamics of their democracy. Our analysis will contribute to a more nuanced understanding of how demographic shifts, economic conditions, and candidate attributes interact to produce electoral outcomes.
-          </p>
-          <p>
-            Furthermore, this project serves as a practical application of data mining techniques to real-world political data, demonstrating the power of clustering algorithms and association rule mining to uncover hidden patterns in complex datasets. The methodologies developed here can be extended to analyze elections at other levels of government or in other democratic systems.
+            Recent elections at the national level of US government have resulted in poor outcomes for the Democratic party, illustrated by their current absence in the White House and minority status in both houses of Congress. The 2028 Presidential election offers an opportunity to reverse this trend; however, in a polarized political climate, success requires the identification and understanding of the electorate factions that tend to decide national elections within the highest-leverage Electoral states. Our goal is to address this challenge by developing a model that identifies the swing-state counties with largest and most impactful fluctuations in voting patterns between major political parties. Through the integration and analysis of historical Presidential election results (2016-2024) and county-level census demographics (Pennsylvania, Michigan, & North Carolina), we aim to identify counties that offer a combination of likelihood and opportunity for Democratics, as well as the types of voters that contribute to this elasticity. Our analysis will include k-means clustering of counties and association rule mining to uncover the combinations of socio-economic traits that characterize high-volatility electorates.
           </p>
         </div>
         
         <!-- Figure Placeholder -->
         <div class="figure-placeholder">
-          <p>📊 Figure 1: Electoral map visualization showing swing state counties will be placed here</p>
+          <p>📊 Figure 1: Example: Electoral map visualization showing swing states</p>
         </div>
         
       </div>
@@ -91,19 +79,7 @@
         
         <div class="content-block">
           <p>
-            The primary stakeholders impacted by this research are political campaign organizations, particularly those affiliated with the Democratic Party seeking to optimize their electoral strategies for the 2028 Presidential election. Campaign managers and strategists can use our findings to identify which counties deserve the most attention and resources, potentially improving their chances of winning crucial Electoral College votes.
-          </p>
-          <p>
-            Political consultants and data analysts who advise campaigns represent another key stakeholder group. Our methodology provides a framework for analyzing electoral volatility that can be applied across multiple election cycles and adapted for different political contexts. These professionals can leverage our clustering and association rule mining techniques to develop more sophisticated targeting strategies.
-          </p>
-          <p>
-            Academic researchers studying American political behavior and electoral dynamics will benefit from our analysis. Political scientists investigating the causes of electoral volatility, the relationship between demographics and voting patterns, and the effectiveness of campaign strategies can build upon our findings. Our dataset integration approach also provides a model for combining disparate data sources in political research.
-          </p>
-          <p>
-            Journalists and media organizations covering elections are stakeholders who can use our insights to provide more informed and nuanced coverage of electoral dynamics. Understanding which counties are most likely to swing and why helps journalists focus their reporting on the communities that will ultimately decide elections.
-          </p>
-          <p>
-            Finally, engaged citizens and advocacy organizations interested in democratic participation benefit from research that illuminates how elections are won and lost. By understanding the factors that drive electoral outcomes, citizens can make more informed decisions about their own political engagement and advocacy efforts.
+            The primary stakeholders impacted by this research are...
           </p>
         </div>
         
@@ -117,19 +93,7 @@
         
         <div class="content-block">
           <p>
-            Current approaches to electoral analysis typically rely on polling data, historical voting patterns, and basic demographic analysis. Organizations like FiveThirtyEight, The Cook Political Report, and various academic institutions have developed sophisticated models for predicting election outcomes. However, these models often focus on state-level predictions rather than the county-level granularity that our research targets.
-          </p>
-          <p>
-            Existing solutions also tend to treat elections in isolation rather than analyzing the patterns of change across multiple election cycles. Our approach differs by specifically focusing on voting pattern volatility—identifying not just where candidates perform well, but where their performance varies most significantly from election to election. This temporal dimension adds crucial context for understanding electoral dynamics.
-          </p>
-          <p>
-            A significant gap in current research is the integration of candidate-specific attributes with county-level demographic data. While studies have examined how candidate characteristics affect overall vote share, fewer have explored how these effects vary across different types of communities. Our use of the DIME database to incorporate candidate ideology scores represents an innovative approach to bridging this gap.
-          </p>
-          <p>
-            Additionally, existing electoral analyses often rely on traditional statistical methods rather than data mining techniques like k-means clustering and association rule mining. These methods can uncover non-obvious patterns and relationships in the data that might be missed by conventional approaches. Our project demonstrates how these techniques can be applied to political data to generate novel insights.
-          </p>
-          <p>
-            The combination of multiple data sources—election returns, census demographics, and candidate attributes—in a unified analytical framework represents another contribution beyond existing solutions. By systematically integrating these diverse datasets, we can examine interactions between variables that are typically studied in isolation [1, 2].
+            Current approaches to electoral analysis typically rely on...
           </p>
         </div>
         
@@ -143,19 +107,7 @@
         
         <div class="content-block">
           <p>
-            Our project will proceed through several phases, beginning with comprehensive data collection and integration. We will gather county-level Presidential election returns from 2016-2024 using the MIT Election Data & Science Lab dataset, which provides standardized vote counts for all U.S. counties. This will be combined with demographic data from IPUMS NHGIS, including variables related to education, income, race, age, and population density.
-          </p>
-          <p>
-            The data preprocessing phase will involve cleaning and standardizing the election returns, calculating vote margins and volatility metrics, and merging the election data with corresponding demographic indicators. We will create derived features such as the change in Democratic vote share between consecutive elections and classify counties based on their historical voting patterns.
-          </p>
-          <p>
-            Our primary analytical approach will employ k-means clustering to identify groups of counties with similar demographic profiles and voting patterns. This unsupervised learning technique will reveal natural groupings in the data that can inform our understanding of different types of swing counties. We will experiment with different numbers of clusters and validate our results using silhouette scores and other metrics.
-          </p>
-          <p>
-            Association rule mining will complement our clustering analysis by uncovering combinations of socio-economic traits that characterize high-volatility electorates. Using algorithms like Apriori or FP-Growth, we will identify frequent itemsets and generate rules that describe the demographic conditions associated with electoral swing. These rules will provide interpretable insights for campaign strategists.
-          </p>
-          <p>
-            The project will conclude with visualization and interpretation of our findings, including interactive maps showing county-level voting patterns, cluster profiles describing the characteristics of different voter groups, and a set of actionable recommendations based on our association rules. All code and data will be made available through our GitHub repository for reproducibility.
+            Our project will proceed through several phases, beginning with comprehensive data collection and integration...
           </p>
         </div>
         
@@ -169,34 +121,34 @@
         
         <ol class="questions-list">
           <li class="question-item">
-            <h4>Which counties in Pennsylvania, Michigan, and North Carolina exhibited the highest voting volatility between 2016-2024 Presidential elections?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>What demographic characteristics (education, income, race, age) are most strongly associated with county-level electoral volatility?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>Can we identify distinct clusters of swing counties based on their demographic profiles and voting patterns?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>What combinations of socio-economic factors are most predictive of a county switching party preference between elections?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>How does population density correlate with electoral volatility across our target states?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>Are there significant differences in the drivers of electoral volatility between Pennsylvania, Michigan, and North Carolina?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>What role does educational attainment play in predicting county-level shifts toward or away from Democratic candidates?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>Can association rules identify "profiles" of counties that are most susceptible to changing their voting patterns?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>How do economic indicators (median income, unemployment) relate to voting pattern changes across election cycles?</h4>
+            <h4></h4>
           </li>
           <li class="question-item">
-            <h4>Which high-volatility counties offer the greatest opportunity for Democratic gains based on demographic trends?</h4>
+            <h4></h4>
           </li>
         </ol>
         
@@ -209,8 +161,8 @@
         <h2>References</h2>
         
         <div class="content-block">
-          <p>[1] MIT Election Data + Science Lab. "County Presidential Election Returns 2000-2024." Harvard Dataverse, 2024. <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ" target="_blank">https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ</a></p>
-          <p>[2] IPUMS NHGIS, University of Minnesota. <a href="https://www.nhgis.org/" target="_blank">https://www.nhgis.org/</a></p>
+          <p>[1] </p>
+          <p>[2] </p>
         </div>
         
       </div>

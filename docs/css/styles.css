@@ -410,6 +410,7 @@ p {
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
+  min-height: 60px;
 }
 
 .question-item:hover {
@@ -468,6 +469,7 @@ p {
   padding-left: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
   color: var(--cu-dark-gray);
+  min-height: 1.5rem;
 }
 
 .bullet-list li::before {

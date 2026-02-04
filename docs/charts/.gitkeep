@@ -1,0 +1,15 @@
+# Interactive Charts
+Place exported Plotly/Altair HTML files here.
+
+## Usage
+From Jupyter notebook:
+```python
+import plotly.express as px
+fig = px.choropleth(...)
+fig.write_html("../docs/charts/map_name.html")
+```
+
+Then embed in HTML:
+```html
+<iframe src="charts/map_name.html" width="100%" height="600"></iframe>
+```

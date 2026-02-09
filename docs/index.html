@@ -19,7 +19,7 @@
       <div class="logo">
         <div>
           <div class="logo-text">Swing State Analysis</div>
-          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+          <div class="logo-subtext">CSCI 5502 &bull; Data Mining &bull; Spring 2026</div>
         </div>
       </div>
       
@@ -60,13 +60,16 @@
         
         <div class="content-block">
           <p>
-            Recent elections at the national level of US government have resulted in poor outcomes for the Democratic party, illustrated by their current absence in the White House and minority status in both houses of Congress. The 2028 Presidential election offers an opportunity to reverse this trend; however, in a polarized political climate, success requires the identification and understanding of the electorate factions that tend to decide national elections within the highest-leverage Electoral states. Our goal is to address this challenge by developing a model that identifies the swing-state counties with largest and most impactful fluctuations in voting patterns between major political parties. Through the integration and analysis of historical Presidential election results (2016-2024) and county-level census demographics (Pennsylvania, Michigan, & North Carolina), we aim to identify counties that offer a combination of likelihood and opportunity for Democratics, as well as the types of voters that contribute to this elasticity. Our analysis will include k-means clustering of counties and association rule mining to uncover the combinations of socio-economic traits that characterize high-volatility electorates.
+            Recent elections at the national level of US government have resulted in poor outcomes for the Democratic party, illustrated by their current absence in the White House and minority status in both houses of Congress. This erosion of power was precipitated by extremely narrow popular vote deficits in a handful of key "Battleground States". In an era defined by political polarization, Electoral College outcomes are no longer a matter of national appeal, but hinge on the voting patterns of geographic micro-factions. In a competitive and localized presidential election, small shifts in high-leverage counties can trigger disproportionate Electoral consequences for candidates.
+          </p>
+          <p>
+            The 2028 Presidential election offers a critical opportunity for a Democratic reversal; however, success requires the precise identification of the electorate factions that decide outcomes within these key states. Our goal is to address this challenge by developing a model that identifies swing-state counties with the largest and most impactful variance in voting patterns. Through the integration of historical election results (2016&ndash;2024) and county-level census demographics&mdash;specifically in Pennsylvania, Michigan, and North Carolina&mdash;we aim to isolate counties that offer the optimal combination of electoral elasticity and vote volume. Our analysis will utilize k-means clustering and association rule mining to uncover the specific socio-economic feature sets that characterize these high-volatility electorates.
           </p>
         </div>
         
         <figure style="margin: var(--spacing-lg) 0; text-align: center;">
           <img src="images/figures/swing_states_map.png" alt="Map of continental United States highlighting Pennsylvania, Michigan, and North Carolina as target swing states for analysis" style="max-width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow-md);">
-          <figcaption style="margin-top: var(--spacing-sm); color: var(--cu-dark-gray); font-size: 0.9rem; font-style: italic;">Figure 1: Target swing states for our analysis - Pennsylvania (19 EV), Michigan (15 EV), and North Carolina (16 EV)</figcaption>
+          <figcaption style="margin-top: var(--spacing-sm); color: var(--cu-dark-gray); font-size: 0.9rem; font-style: italic;">Figure 1: Target swing states for our analysis &mdash; Pennsylvania (19 EV), Michigan (15 EV), and North Carolina (16 EV)</figcaption>
         </figure>
         
       </div>
@@ -79,7 +82,10 @@
         
         <div class="content-block">
           <p>
-            The primary stakeholders impacted by this research are...
+            The main stakeholders will be Democratic candidates, along with their campaign teams. They can use these models to help decide on which counties to focus on to maximize their voting returns. Additionally, clustering counties on similar demographics could help candidates devise a game plan for approaching certain counties, based on what has or hasn't worked for them in similar counties in the past. Our model can also be used for longer-term plans by Democratic political strategists beyond just looking at important swing states for the upcoming election; by running the model on more states, they can determine vulnerable counties they should invest time and money into to keep deep blue states blue or pick up ground in deep red states.
+          </p>
+          <p>
+            Another stakeholder is political media outlets. They could use our model to predict which counties will be the most important in the election. In turn, they can keep their audience more informed leading up to the election, and could improve their models for calling elections. The identified counties will be positively and negatively impacted, too. They'll get to host more campaign events and receive more campaign ads, which could boost the local economy and voter turnout. However, the increased attention and scrutiny could make it harder for local officials to run a smooth voting process.
           </p>
         </div>
         
@@ -93,7 +99,13 @@
         
         <div class="content-block">
           <p>
-            Current approaches to electoral analysis typically rely on...
+            US presidential elections are a common area of study for political scientists and data analysts alike. Alan Abramowitz (1988) famously weighed presidential approval, economic growth, and duration of incumbent party leadership in his "Time For a Change" linear regression model predicting popular vote distribution. More recently, Helmut Norpoth's Primary Model rivaled Abramowitz's, introducing variables surrounding national primary performance. After correctly forecasting a Trump Victory in 2016, the Primary Model incorrectly predicted the following two presidential outcomes. Both of the models described above are reliant on nationally scoped data (economic conditions, incumbents, and primaries) rather than local dynamics. Further, both are more interested in predicting outcomes than identifying the factions that dictate electoral results.
+          </p>
+          <p>
+            Recent work has shifted to more granular analyses. Chen and Patel (2021) demonstrated the efficacy of a localized approach by narrowing the geographic focus to 15 states through a "Swing State Index". By applying hierarchical clustering to 2020 election returns, they identified distinct state archetypes&mdash;distinguishing demographic-driven shifts vs policy-driven shifts. Qualitative analysis was employed to attribute these patterns to specific political and cultural events. Crane, Koch, and Lin (2024) focused on counties rather than state trends, finding that US counties with relatively high stock market participation were more likely to vote for the incumbent party when accompanied by strong stock market performance.
+          </p>
+          <p>
+            While relevant research has localized, a significant gap remains. Chen and Patel have described past volatility at the state level, dismissing shifts in behavior at more granular levels. Crane et al. describe a univariate voting dynamic at the county level; however, they fail to consider the impact of variables beyond stock market participation.
           </p>
         </div>
         
@@ -107,7 +119,10 @@
         
         <div class="content-block">
           <p>
-            Our project will proceed through several phases, beginning with comprehensive data collection and integration...
+            Our project begins with building a strong foundation: developing explicit research questions that ensure both feasibility and real-world utility, while identifying accessible data sources including county-level census data, US Presidential Election county-level voting returns, and potential additions such as state polling in featured swing states and the American Community Survey. Alongside this, we will conduct prior research on the topic, identify existing gaps in the literature, and consider the needs of project stakeholders and future applications.
+          </p>
+          <p>
+            The analytical core of the project centers on several key methods. First, we will generate a custom "Volatility Score" to describe county variance in Democratic Party voting margin between the 2016, 2020, and 2024 elections. We will then employ K-Means Clustering to segment swing state counties into archetypes based on wealth, education, housing, and demographic metrics&mdash;with the potential addition of capturing the delta of key metrics to consider changes over election intervals. Finally, we will employ Association Rule Mining to identify combinations of county traits that signal electorate volatility and Democratic opportunity.
           </p>
         </div>
         
@@ -119,38 +134,53 @@
       <div class="container">
         <h2>Research Questions</h2>
         
-        <ol class="questions-list">
+        <!-- Results Application (Main Questions) -->
+        <h3 style="color: var(--cu-dark-blue); margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">Results Application</h3>
+        <ol class="questions-list" style="counter-reset: question-counter 0;">
           <li class="question-item">
-            <h4></h4>
+            <h4>Which counties illustrate a combination of electoral elasticity and impact (vote volume), maximizing the marginal utility of Democratic resource allocation?</h4>
           </li>
           <li class="question-item">
-            <h4></h4>
+            <h4>Which swing-state counties had the highest electorate volatility between the 2016, 2020, and 2024 elections in terms of percentage/volume of Democratic votes?</h4>
           </li>
           <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
-          </li>
-          <li class="question-item">
-            <h4></h4>
+            <h4>What specific demographic and economic features distinguish "High-Volatility" county clusters from "Stable" clusters?</h4>
           </li>
         </ol>
+        
+        <!-- Hypotheses / Predictions -->
+        <h3 style="color: var(--cu-dark-blue); margin-top: var(--spacing-xl); margin-bottom: var(--spacing-md);">Hypotheses / Predictions</h3>
+        <ol class="questions-list" style="counter-reset: question-counter 3;">
+          <li class="question-item">
+            <h4>Electoral volatility (defined as the standard deviation of vote margin 2016&ndash;2024) is inversely correlated with wealth. Counties in the bottom quartile of median household income will exhibit significantly higher variance in partisan swing than counties in the top quartile.</h4>
+          </li>
+          <li class="question-item">
+            <h4>A composite &lsquo;Racial Diversity Index&rsquo; will demonstrate higher feature importance than any single demographic (e.g., &lsquo;% Black&rsquo; or &lsquo;% Hispanic&rsquo;), suggesting that racial heterogeneity is a stronger predictor of Democratic vote share than individual demographics.</h4>
+          </li>
+          <li class="question-item">
+            <h4>High-volatility counties function as macro-trend amplifiers rather than independent outliers. These counties will shift in the same direction as the statewide or national trend but with significantly greater magnitude, making them the highest-leverage targets for 2028.</h4>
+          </li>
+        </ol>
+        
+        <!-- Further Contextual Analysis (Supplemental) -->
+        <h3 style="color: var(--cu-dark-blue); margin-top: var(--spacing-xl); margin-bottom: var(--spacing-md);">Further Contextual Analysis</h3>
+        <ol class="questions-list" style="counter-reset: question-counter 6;">
+          <li class="question-item">
+            <h4>To what extent do demographic predictors of electoral volatility generalize across state lines? Specifically, does a model trained on high-variance counties in Pennsylvania successfully identify high-variance counties in Michigan, or are volatility drivers geographically distinct?</h4>
+          </li>
+          <li class="question-item">
+            <h4>Does electoral volatility exhibit temporal consistency? Does the geographic composition of the &lsquo;Swing Map&rsquo; exhibit significant shifts between the 2016, 2020, and 2024 cycles?</h4>
+          </li>
+          <li class="question-item">
+            <h4>What is the statistical correlation between voter turnout variance and vote share volatility?</h4>
+          </li>
+        </ol>
+        
+        <!-- Penn Map Image -->
+        <figure style="margin: var(--spacing-xl) 0; text-align: center;">
+          <img src="images/figures/penn.png" alt="Pennsylvania county-level swing map showing Democratic and Republican vote shifts by county" style="max-width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow-md);">
+          <figcaption style="margin-top: var(--spacing-sm); color: var(--cu-dark-gray); font-size: 0.9rem; font-style: italic;">Figure 2: Pennsylvania county-level swing map &mdash; Source: Dave Leip's Atlas of U.S. Presidential Elections / UVA Center for Politics</figcaption>
+        </figure>
         
       </div>
     </section>
@@ -161,8 +191,9 @@
         <h2>References</h2>
         
         <div class="content-block">
-          <p>[1] </p>
-          <p>[2] </p>
+          <p>[1] Abramowitz, A. I. (1988). An improved model for predicting presidential election outcomes. <em>PS: Political Science and Politics</em>, 21(4), 843&ndash;847.</p>
+          <p>[2] Chen, S. & Patel, R. (2021). Swing State Index: Hierarchical clustering of 2020 election returns across 15 states.</p>
+          <p>[3] Crane, L., Koch, C., & Lin, K. (2024). Stock market participation and county-level voting patterns for the incumbent party.</p>
         </div>
         
       </div>

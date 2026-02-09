@@ -19,7 +19,7 @@
       <div class="logo">
         <div>
           <div class="logo-text">Swing State Analysis</div>
-          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+          <div class="logo-subtext">CSCI 5502 &bull; Data Mining &bull; Spring 2026</div>
         </div>
       </div>
       
@@ -60,7 +60,7 @@
         <div class="proposal-section">
           <h3>Research Topic</h3>
           <ul class="bullet-list">
-            <li>Analysis of swing-state county-level voting patterns in Presidential elections (2016-2024)</li>
+            <li>Analysis of swing-state county-level voting patterns in Presidential elections (2016&ndash;2024)</li>
             <li>Focus on Pennsylvania, Michigan, and North Carolina as high-leverage Electoral states</li>
             <li>Integration of election results with census demographics to understand voter behavior</li>
             <li>Identification of counties with highest electoral volatility between major parties</li>
@@ -80,7 +80,7 @@
         <div class="proposal-section">
           <h3>Scope</h3>
           <ul class="bullet-list">
-            <li><strong>Geographic:</strong> Three swing states — Pennsylvania, Michigan, North Carolina</li>
+            <li><strong>Geographic:</strong> Three swing states &mdash; Pennsylvania, Michigan, North Carolina</li>
             <li><strong>Temporal:</strong> Presidential elections from 2016 to 2024 (three election cycles)</li>
             <li><strong>Granularity:</strong> County-level analysis (~250+ counties across three states)</li>
             <li><strong>Data types:</strong> Election returns, demographic census data, derived volatility metrics</li>
@@ -116,7 +116,7 @@
               <tr>
                 <td><strong>County-Level Demographics</strong></td>
                 <td>IPUMS NHGIS (University of Minnesota)</td>
-                <td>~3,200 counties × 16 years × 50-100 variables</td>
+                <td>~3,200 counties &times; 16 years &times; 50&ndash;100 variables</td>
                 <td>Education, income, race/ethnicity, age, population density</td>
               </tr>
             </tbody>
@@ -143,20 +143,20 @@
         <div class="proposal-section">
           <h3>Methodology</h3>
           <ul class="bullet-list">
-            <li><strong>K-Means Clustering:</strong> </li>
-            <li><strong>Association Rule Mining:</strong> </li>
-            <li><strong>Volatility Metrics:</strong> </li>
-            <li><strong>Feature Engineering:</strong> </li>
+            <li><strong>K-Means Clustering:</strong> Segment swing-state counties into distinct archetypes based on wealth, education, housing, and demographic metrics to reveal structural groupings in the electorate</li>
+            <li><strong>Association Rule Mining:</strong> Identify frequent combinations of county-level socio-economic traits that co-occur with high electoral volatility and Democratic opportunity</li>
+            <li><strong>Volatility Metrics:</strong> Generate a custom "Volatility Score" measuring county-level variance in Democratic Party voting margin across the 2016, 2020, and 2024 Presidential elections</li>
+            <li><strong>Feature Engineering:</strong> Capture deltas of key demographic and economic metrics across election intervals to account for changing conditions, and derive composite indices such as a Racial Diversity Index</li>
           </ul>
         </div>
         
         <div class="proposal-section">
           <h3>Expected Outputs</h3>
           <ul class="bullet-list">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>Ranked county volatility scores and classifications across Pennsylvania, Michigan, and North Carolina</li>
+            <li>Cluster profiles characterizing distinct county archetypes with their demographic and economic signatures</li>
+            <li>Association rules linking specific combinations of socio-economic traits to electoral volatility patterns</li>
+            <li>Interactive visualizations and choropleth maps illustrating county-level voting shifts and cluster assignments</li>
           </ul>
         </div>
         
@@ -170,16 +170,15 @@
         <div class="proposal-section">
           <h3>Research Questions Summary</h3>
           <ul class="bullet-list">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>Which counties illustrate a combination of electoral elasticity and impact (vote volume), maximizing the marginal utility of Democratic resource allocation?</li>
+            <li>Which swing-state counties had the highest electorate volatility between the 2016, 2020, and 2024 elections in terms of percentage/volume of Democratic votes?</li>
+            <li>What specific demographic and economic features distinguish "High-Volatility" county clusters from "Stable" clusters?</li>
+            <li>Is electoral volatility inversely correlated with wealth, with bottom-quartile income counties exhibiting higher partisan swing variance?</li>
+            <li>Does a composite Racial Diversity Index demonstrate higher feature importance than any single racial demographic as a predictor of Democratic vote share?</li>
+            <li>Do high-volatility counties function as macro-trend amplifiers, shifting in the same direction as the statewide trend but with greater magnitude?</li>
+            <li>To what extent do demographic predictors of electoral volatility generalize across state lines?</li>
+            <li>Does electoral volatility exhibit temporal consistency across the 2016, 2020, and 2024 cycles?</li>
+            <li>What is the statistical correlation between voter turnout variance and vote share volatility?</li>
           </ul>
         </div>
         
@@ -225,8 +224,24 @@
       </div>
     </section>
     
-    <!-- Timeline -->
+    <!-- Future Directions -->
     <section class="section section-alt">
+      <div class="container">
+        
+        <div class="proposal-section">
+          <h3>Future Directions</h3>
+          <ul class="bullet-list">
+            <li>Which types of candidates would appeal most in these high-volatility counties?</li>
+            <li>Could these results be applied to non-presidential elections such as gubernatorial, Senate, or House races?</li>
+            <li>Can we predict voting patterns in other states based on the trends we find in our data?</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- Timeline -->
+    <section class="section">
       <div class="container">
         
         <div class="proposal-section">

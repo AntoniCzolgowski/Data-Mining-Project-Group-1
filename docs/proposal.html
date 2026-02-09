@@ -146,7 +146,7 @@
             <li><strong>K-Means Clustering:</strong> Segment swing-state counties into distinct archetypes based on wealth, education, housing, and demographic metrics to reveal structural groupings in the electorate</li>
             <li><strong>Association Rule Mining:</strong> Identify frequent combinations of county-level socio-economic traits that co-occur with high electoral volatility and Democratic opportunity</li>
             <li><strong>Volatility Metrics:</strong> Generate a custom "Volatility Score" measuring county-level variance in Democratic Party voting margin across the 2016, 2020, and 2024 Presidential elections</li>
-            <li><strong>Feature Engineering:</strong> Capture deltas of key demographic and economic metrics across election intervals to account for changing conditions, and derive composite indices such as a Racial Diversity Index</li>
+
           </ul>
         </div>
         
@@ -172,12 +172,12 @@
           <ul class="bullet-list">
             <li>Which counties illustrate a combination of electoral elasticity and impact (vote volume), maximizing the marginal utility of Democratic resource allocation?</li>
             <li>Which swing-state counties had the highest electorate volatility between the 2016, 2020, and 2024 elections in terms of percentage/volume of Democratic votes?</li>
-            <li>What specific demographic and economic features distinguish "High-Volatility" county clusters from "Stable" clusters?</li>
-            <li>Is electoral volatility inversely correlated with wealth, with bottom-quartile income counties exhibiting higher partisan swing variance?</li>
-            <li>Does a composite Racial Diversity Index demonstrate higher feature importance than any single racial demographic as a predictor of Democratic vote share?</li>
-            <li>Do high-volatility counties function as macro-trend amplifiers, shifting in the same direction as the statewide trend but with greater magnitude?</li>
-            <li>To what extent do demographic predictors of electoral volatility generalize across state lines?</li>
-            <li>Does electoral volatility exhibit temporal consistency across the 2016, 2020, and 2024 cycles?</li>
+            <li>What specific demographic and economic features distinguish &ldquo;High-Volatility&rdquo; county clusters from &ldquo;Stable&rdquo; clusters?</li>
+            <li>Electoral volatility (defined as the standard deviation of vote margin 2016&ndash;2024) is inversely correlated with wealth. Counties in the bottom quartile of median household income will exhibit significantly higher variance in partisan swing than counties in the top quartile.</li>
+            <li>A composite &lsquo;Racial Diversity Index&rsquo; will demonstrate higher feature importance than any single demographic (e.g., &lsquo;% Black&rsquo; or &lsquo;% Hispanic&rsquo;), suggesting that racial heterogeneity is a stronger predictor of Democratic vote share than individual demographics.</li>
+            <li>High-volatility counties function as macro-trend amplifiers rather than independent outliers. These counties will shift in the same direction as the statewide or national trend but with significantly greater magnitude, making them the highest-leverage targets for 2028.</li>
+            <li>To what extent do demographic predictors of electoral volatility generalize across state lines? Specifically, does a model trained on high-variance counties in Pennsylvania successfully identify high-variance counties in Michigan, or are volatility drivers geographically distinct?</li>
+            <li>Does electoral volatility exhibit temporal consistency? Does the geographic composition of the &lsquo;Swing Map&rsquo; exhibit significant shifts between the 2016, 2020, and 2024 cycles?</li>
             <li>What is the statistical correlation between voter turnout variance and vote share volatility?</li>
           </ul>
         </div>

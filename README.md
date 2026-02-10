@@ -9,11 +9,11 @@ Recent U.S. Presidential elections have been decided by small margins in a handf
 
 ## Team
 
-| Name | Role |
-|----- |----- |
-| Sam Goodell | Modelling Lead & Full Stack Developer |
-| Will Creager | Data Lead & Full Stack Developer |
-| Antoni Czolgowski | Visualizations Lead & Full Stack Developer |
+| Name |
+|----- |
+| Sam Goodell |
+| Will Creager | 
+| Antoni Czolgowski | 
 
 ## Milestones
 

@@ -1,0 +1,8 @@
+ipumspy
+pandas
+python-dotenv
+matplotlib
+seaborn
+numpy
+scikit-learn
+jupyter

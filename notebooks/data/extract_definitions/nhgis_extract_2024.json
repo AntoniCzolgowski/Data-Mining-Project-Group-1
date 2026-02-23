@@ -1,8 +1,8 @@
 {
     "dataFormat": "csv_no_header",
-    "description": "Swing State Demographics - 2016 Election (ACS 5yr)",
+    "description": "Swing State Demographics - 2024 Election (ACS 5yr)",
     "datasets": {
-        "2012_2016_ACS5a": {
+        "2020_2024_ACS5a": {
             "dataTables": [
                 "B01003",
                 "B01002",
@@ -24,7 +24,7 @@
             "years": [],
             "breakdownValues": []
         },
-        "2012_2016_ACS5b": {
+        "2020_2024_ACS5b": {
             "dataTables": [
                 "B17001"
             ],

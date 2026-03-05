@@ -28,9 +28,14 @@ df_ns["race_entropy_norm"] = race_entropy_norm
 # condense table for merge with scaled
 entropy_cols = df_ns[["county_fips", "election_year","race_entropy_norm"]].copy()
 
+#ensure leading zero isnt dropped 
+entropy_cols["county_fips"] = entropy_cols["county_fips"].astype(str).str.zfill(5)
+entropy_cols["election_year"] = entropy_cols["election_year"].astype(int)
+
 # merge with scaled dataset
 file_scaled = "../data/processed/master_dataset_scaled.csv"
-master_scaled = pd.read_csv(file_scaled)
+# ensure leading 0 isnt dropped from fips 
+master_scaled = pd.read_csv(file_scaled, dtype={"county_fips": "string"})
 
 master_scaled = master_scaled.merge(
     entropy_cols,

@@ -661,6 +661,11 @@ p {
     text-align: center;
   }
   
+  /* Stat Grid */
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   /* Cards */
   .card-grid {
     grid-template-columns: 1fr;
@@ -691,6 +696,81 @@ p {
     width: 120px;
     height: 120px;
   }
+}
+
+/* ---------- Stat Grid (EDA Page) ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--cu-dark-blue) 0%, var(--black) 100%);
+  color: var(--white);
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cu-gold);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--cu-light-gray);
+  margin-top: var(--spacing-xs);
+}
+
+/* ---------- Figure Container (EDA Page) ---------- */
+.figure-container {
+  margin: var(--spacing-lg) 0;
+  text-align: center;
+}
+
+.figure-container img {
+  max-width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  margin: 0 auto;
+}
+
+.figure-container figcaption {
+  margin-top: var(--spacing-sm);
+  color: var(--cu-dark-gray);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* ---------- Data Table Extras (EDA Page) ---------- */
+.table-subheader td {
+  background-color: var(--cu-light-gold);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--cu-dark-blue);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 2px solid var(--cu-gold);
+}
+
+.value-negative {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.value-positive {
+  color: #2471a3;
+  font-weight: 600;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin: var(--spacing-md) 0;
 }
 
 /* ---------- Print Styles ---------- */

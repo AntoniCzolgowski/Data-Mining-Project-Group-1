@@ -12,17 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  
+
   <!-- Header & Navigation -->
   <header class="header">
     <div class="header-container">
       <div class="logo">
         <div>
           <div class="logo-text">Swing State Analysis</div>
-          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+          <div class="logo-subtext">CSCI 5502 &bull; Data Mining &bull; Spring 2026</div>
         </div>
       </div>
-      
+
       <nav class="nav">
         <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
           <span></span>
@@ -33,41 +33,471 @@
           <li><a href="index.html" class="nav-link">Introduction</a></li>
           <li><a href="team.html" class="nav-link">Team</a></li>
           <li><a href="proposal.html" class="nav-link">Proposal</a></li>
-          <li><a href="eda.html" class="nav-link active">Data & EDA</a></li>
+          <li><a href="eda.html" class="nav-link active">Data &amp; EDA</a></li>
           <li><a href="methods.html" class="nav-link disabled">Methods</a></li>
           <li><a href="results.html" class="nav-link disabled">Results</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <h1>Data & Exploratory Analysis</h1>
+      <h1>Data &amp; Exploratory Analysis</h1>
       <p class="hero-subtitle">Milestone 2</p>
-      <p>Data collection, preprocessing, and exploratory data analysis.</p>
+      <p>750 county-year observations. 39 variables. Three swing states. Zero missing values.</p>
     </div>
   </section>
-  
+
   <!-- Main Content -->
   <main>
-    
-    <section class="section">
+
+    <!-- Section 1: Data at a Glance -->
+    <section class="section section-alt">
       <div class="container">
-        
-        <div class="placeholder-content">
-          <div class="placeholder-icon">📊</div>
-          <h2>Coming Soon</h2>
-          <p>This section will be completed in Milestone 2.</p>
-          <span class="milestone-badge">Milestone 2</span>
+        <h2>Data at a Glance</h2>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">750</div>
+            <div class="stat-label">County-Year Observations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">39</div>
+            <div class="stat-label">Variables</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Authoritative Data Sources</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Missing Values</div>
+          </div>
         </div>
-        
+
+        <div class="content-block">
+          <p>
+            Three authoritative datasets were collected and integrated for this project. Each covers 250 counties across Pennsylvania, Michigan, and North Carolina for the 2016, 2020, and 2024 presidential elections. The NHGIS demographic panel was acquired programmatically via the IPUMS NHGIS API using the ipumspy Python library, providing county-level demographic rates from ACS 5-year estimates covering race/ethnicity, education, income distribution, housing, commuting, household structure, and population density. Supplemental age-bracket breakdowns and foreign-born population data were acquired from the Census Bureau API. Presidential election returns were sourced from the MIT Election Data and Science Lab. The integration was performed in two sequential left joins on the composite key (county_fips + election_year), with each merge verified to maintain exactly 750 rows with zero nulls introduced.
+          </p>
+        </div>
+
       </div>
     </section>
-    
+
+    <!-- Section 2: The Electoral Landscape -->
+    <section class="section">
+      <div class="container">
+        <h2>The Electoral Landscape</h2>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Boxplots-DemMarginsByStateAndYear.png" alt="Boxplots of county-level Democratic vote margins grouped by state and year for PA, MI, and NC across 2016, 2020, and 2024">
+            <figcaption>Figure 1: Distribution of county-level Democratic vote margins by state and year</figcaption>
+          </figure>
+
+          <p>
+            There are a few noticeable patterns in the county-level Democratic vote margin distributions. At least one strong positive outlier appears for each state-year pair, driven by urban counties like Philadelphia in PA, Durham in NC, and Washtenaw in MI &mdash; but no negative outliers of comparable magnitude exist. All three states have fairly consistent Q1, median, and Q3 values across all three years, with a slightly higher median in 2020 compared to the other two years &mdash; the year the Democratic candidate won nationally. The medians are consistently well below zero, even for the state-year pairs in which the Democratic candidate won the state. This reflects a well-known structural pattern: Democratic candidates tend to win fewer counties than their Republican counterparts, but the counties they win tend to have higher populations and therefore carry more electoral weight.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Regplot-DemMarginsVsPopDensity.png" alt="Scatterplot of population density versus Democratic vote margin with regression line, colored by state">
+            <figcaption>Figure 2: Population density vs. Democratic vote margin (Philadelphia County excluded as extreme outlier at 11,774/sq mi)</figcaption>
+          </figure>
+
+          <p>
+            Philadelphia County represents an extreme outlier in terms of population density (11,774 people per square mile) and was excluded from this plot. There is a clear positive correlation between population density and Democratic vote margin. A majority of the counties appear on the lower end of the population density range, below 500 people per square mile. The correlation between public transit usage and population density (r&nbsp;=&nbsp;0.85) further reinforces that this axis captures a fundamental urban-rural divide &mdash; one that consistently emerges as the strongest geographic predictor of partisan lean in the dataset.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3: What Drives the Vote? -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>What Drives the Vote?</h2>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Heatmap-SelectedFeatures.png" alt="Correlation heatmap of Democratic margin, median age, non-Hispanic white percentage, bachelor's degree percentage, unemployment rate, and population density">
+            <figcaption>Figure 3: Correlation matrix of key demographic features and Democratic vote margin</figcaption>
+          </figure>
+
+          <p>
+            Non-Hispanic white percentage and median age both have a negative correlation with Democratic vote margin (r&nbsp;=&nbsp;&minus;0.66 and r&nbsp;=&nbsp;&minus;0.41, respectively), while bachelor's degree attainment, unemployment rate, and population density all have positive correlations &mdash; although unemployment rate's is quite weak (r&nbsp;=&nbsp;0.17). The strongest positive correlates are educational attainment (r&nbsp;=&nbsp;0.54) and population density (r&nbsp;=&nbsp;0.43). None of the selected features has a particularly strong correlation with the others, suggesting they capture relatively independent dimensions of county character &mdash; a promising property for the multivariate clustering that follows.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Heatmap-RacialFeatures.png" alt="Correlation heatmap of Democratic margin and racial demographic percentages including Black, Asian, Hispanic, two or more races, and non-Hispanic white">
+            <figcaption>Figure 4: Correlation matrix of racial demographics and Democratic vote margin</figcaption>
+          </figure>
+
+          <p>
+            There is a strong negative correlation between Democratic vote margin and non-Hispanic white percentage (r&nbsp;=&nbsp;&minus;0.66), while the margin is positively correlated with each of the other racial groups to varying degrees &mdash; Black (r&nbsp;=&nbsp;0.60), Asian (r&nbsp;=&nbsp;0.60), Hispanic (r&nbsp;=&nbsp;0.32), and two or more races (r&nbsp;=&nbsp;0.24). While the white percentage is negatively correlated with each of the other races, its strongest negative correlation by a wide margin is with Black percentage (r&nbsp;=&nbsp;&minus;0.93), reflecting the demographic composition of the study region where Black populations represent the primary non-white group. This near-perfect inverse relationship informs our later use of Shannon entropy as a composite diversity measure.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Heatmap-IncomeFeatures.png" alt="Correlation heatmap of Democratic margin and income bracket features including poverty rate, income under 25k, income 50-100k, and income over 100k">
+            <figcaption>Figure 5: Correlation matrix of income features and Democratic vote margin</figcaption>
+          </figure>
+
+          <p>
+            Democratic vote margin has almost no correlation with the percentage of the county earning below $25,000 (r&nbsp;=&nbsp;0.01), a negative correlation with the $50,000&ndash;$100,000 income bracket (r&nbsp;=&nbsp;&minus;0.37), and weak positive correlations with both the poverty rate (r&nbsp;=&nbsp;0.21) and the percentage earning above $100,000 (r&nbsp;=&nbsp;0.24). Although the poverty rate and income over $100,000 have a strong negative correlation with each other (r&nbsp;=&nbsp;&minus;0.65), they have remarkably similar positive correlations with Democratic vote margin. This &ldquo;hollowed-out middle&rdquo; pattern likely reflects the composition of Democratic-leaning counties: urban areas that contain both concentrated poverty and affluent professional populations, reinforcing the need for multivariate approaches over univariate explanations.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4: Age & Immigration -->
+    <section class="section">
+      <div class="container">
+        <h2>Age &amp; Immigration</h2>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Regplot-DemMarginsVsForeignBornPercentage.png" alt="Scatterplot of foreign-born population percentage versus Democratic vote margin colored by state">
+            <figcaption>Figure 6: Foreign-born population percentage vs. Democratic vote margin (r&nbsp;=&nbsp;0.518)</figcaption>
+          </figure>
+
+          <p>
+            There is a fairly strong positive correlation between foreign-born percentage and Democratic vote margin (r&nbsp;=&nbsp;0.518). Three North Carolina counties where about 10% of the population is foreign-born illustrate how the same demographic feature can produce different political outcomes. Over the past three presidential elections, Durham County has consistently had a Democratic margin around +60, making it one of the two strongest Democratic counties in the dataset alongside Philadelphia. Mecklenburg County has been solidly blue with margins in the +30 to +35 range. Meanwhile, Duplin County has been solidly red, with Democratic margins ranging from &minus;18.9 to &minus;28.9 over the three elections. These cases demonstrate that immigration interacts with urbanicity, education, and economic structure in ways that a single correlation coefficient cannot capture.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/Regplot-DemMarginsVsSeniors.png" alt="Scatterplot of senior population percentage (65+) versus Democratic vote margin colored by state">
+            <figcaption>Figure 7: Senior population percentage (65+) vs. Democratic vote margin (r&nbsp;=&nbsp;&minus;0.378)</figcaption>
+          </figure>
+
+          <p>
+            The senior (65 and older) percentage has a negative correlation with Democratic vote margin of similar magnitude (r&nbsp;=&nbsp;&minus;0.378) to the young adult positive correlation reported elsewhere in our analysis. All 15 county-year pairings with over 16% of their population being seniors fall above the regression line, meaning their actual Democratic margin is higher than the trendline would predict. These tend to be communities where other demographic factors &mdash; particularly educational attainment and proximity to metropolitan areas &mdash; partially offset the age effect.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 5: Measuring Electoral Volatility -->
+    <section class="section section-blue">
+      <div class="container">
+        <h2>Measuring Electoral Volatility</h2>
+
+        <div class="content-block">
+          <p>
+            To move beyond static demographic snapshots, we engineered features that capture how counties change between elections. Two complementary approaches were developed: a directional swing score that measures the consistency and magnitude of partisan shifts across consecutive cycles, and a racial entropy index that summarizes demographic diversity into a single comparable metric. These engineered features, drawn from the county volatility dimension table (250 unique counties), provide the foundation for identifying the high-volatility electorates that will drive our clustering analysis.
+          </p>
+        </div>
+
+        <!-- Swing Direction Score -->
+        <div class="content-block">
+          <h3>Swing Direction Score</h3>
+
+          <p>
+            Drawing from the prior work of Chen and Patel (2021), the Directional Swing Index captures both the magnitude and consistency of electoral change. It is computed as the product of the Democratic margin shift from 2016&ndash;2020 and the shift from 2020&ndash;2024, scaled by 10,000 for interpretability. Negative values indicate a reversal in margin direction across cycles; positive values illustrate a consistent shift toward one party over three elections.
+          </p>
+
+          <figure class="figure-container">
+            <img src="images/eda/CountyHeatmapTopAndBottomSwingDirectionScores.png" alt="Map highlighting the top 10 and bottom 10 counties by swing direction score across PA, MI, and NC">
+            <figcaption>Figure 8: Geographic distribution of extreme swing direction scores &mdash; reversals (blue) and consistent shifts (red)</figcaption>
+          </figure>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>County</th>
+                  <th>State</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-subheader">
+                  <td colspan="3">Strongest Reversals (Negative Scores &mdash; margin swung back)</td>
+                </tr>
+                <tr>
+                  <td>Monroe County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;677.1</td>
+                </tr>
+                <tr>
+                  <td>Pike County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;597.0</td>
+                </tr>
+                <tr>
+                  <td>Lackawanna County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;461.7</td>
+                </tr>
+                <tr>
+                  <td>Luzerne County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;409.3</td>
+                </tr>
+                <tr>
+                  <td>Onslow County</td>
+                  <td>NC</td>
+                  <td class="value-negative">&minus;393.9</td>
+                </tr>
+                <tr>
+                  <td>Oakland County</td>
+                  <td>MI</td>
+                  <td class="value-negative">&minus;347.4</td>
+                </tr>
+                <tr>
+                  <td>Chester County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;340.8</td>
+                </tr>
+                <tr>
+                  <td>Macomb County</td>
+                  <td>MI</td>
+                  <td class="value-negative">&minus;328.1</td>
+                </tr>
+                <tr>
+                  <td>Marquette County</td>
+                  <td>MI</td>
+                  <td class="value-negative">&minus;283.6</td>
+                </tr>
+                <tr>
+                  <td>Wayne County</td>
+                  <td>PA</td>
+                  <td class="value-negative">&minus;282.7</td>
+                </tr>
+                <tr class="table-subheader">
+                  <td colspan="3">Most Consistent Shifts (Positive Scores &mdash; sustained one-direction movement)</td>
+                </tr>
+                <tr>
+                  <td>Robeson County</td>
+                  <td>NC</td>
+                  <td class="value-positive">2,185.5</td>
+                </tr>
+                <tr>
+                  <td>Anson County</td>
+                  <td>NC</td>
+                  <td class="value-positive">978.0</td>
+                </tr>
+                <tr>
+                  <td>Scotland County</td>
+                  <td>NC</td>
+                  <td class="value-positive">807.4</td>
+                </tr>
+                <tr>
+                  <td>Warren County</td>
+                  <td>NC</td>
+                  <td class="value-positive">778.8</td>
+                </tr>
+                <tr>
+                  <td>Caswell County</td>
+                  <td>NC</td>
+                  <td class="value-positive">748.8</td>
+                </tr>
+                <tr>
+                  <td>Sampson County</td>
+                  <td>NC</td>
+                  <td class="value-positive">727.3</td>
+                </tr>
+                <tr>
+                  <td>Henderson County</td>
+                  <td>NC</td>
+                  <td class="value-positive">629.5</td>
+                </tr>
+                <tr>
+                  <td>Gates County</td>
+                  <td>NC</td>
+                  <td class="value-positive">625.2</td>
+                </tr>
+                <tr>
+                  <td>Montgomery County</td>
+                  <td>NC</td>
+                  <td class="value-positive">604.6</td>
+                </tr>
+                <tr>
+                  <td>Columbus County</td>
+                  <td>NC</td>
+                  <td class="value-positive">601.8</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The geographic pattern is striking. All ten of the largest positive swings occur in North Carolina, indicating sustained movement toward one party over three elections. The positive extremes are larger in magnitude than the negative extremes, indicating that sustained one-direction shifts can be stronger than directional reversals. In contrast, the most negative scores &mdash; suggesting reversals in direction across cycles &mdash; cluster primarily in northeastern Pennsylvania (Monroe, Pike, Lackawanna, Luzerne), with a smaller pocket in Michigan (Oakland, Macomb, Marquette). A useful next step will be to identify swings by party direction and to investigate what demographic features distinguish these reversal counties from the consistent-shift counties.
+          </p>
+        </div>
+
+        <!-- Racial Diversity: Shannon Entropy -->
+        <div class="content-block">
+          <h3>Racial Diversity: Shannon Entropy</h3>
+
+          <p>
+            We utilized Shannon Entropy to summarize racial heterogeneity for temporal and geographic comparison. The index was normalized to include shares of non-Hispanic White, Black, Asian, and an &ldquo;Other&rdquo; residual category. The result is a diversity measure bounded in [0,&thinsp;1]: 0 indicates a perfectly homogeneous county electorate, 1 illustrates maximum evenness across racial groups. This composite measure allows us to test whether overall diversity &mdash; rather than any single racial demographic &mdash; predicts electoral behavior.
+          </p>
+
+          <figure class="figure-container">
+            <img src="images/eda/CountyHeatmapTopAndBottomShannonEntropyScores.png" alt="Map highlighting the top 10 and bottom 10 counties by Shannon entropy racial diversity score">
+            <figcaption>Figure 9: Geographic distribution of racial diversity extremes (Shannon Entropy)</figcaption>
+          </figure>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>County</th>
+                  <th>State</th>
+                  <th>Entropy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-subheader">
+                  <td colspan="3">Most Diverse (Highest Entropy)</td>
+                </tr>
+                <tr>
+                  <td>Philadelphia County</td>
+                  <td>PA</td>
+                  <td class="value-positive">0.904</td>
+                </tr>
+                <tr>
+                  <td>Mecklenburg County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.882</td>
+                </tr>
+                <tr>
+                  <td>Durham County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.876</td>
+                </tr>
+                <tr>
+                  <td>Guilford County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.839</td>
+                </tr>
+                <tr>
+                  <td>Hoke County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.836</td>
+                </tr>
+                <tr>
+                  <td>Cumberland County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.831</td>
+                </tr>
+                <tr>
+                  <td>Wake County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.826</td>
+                </tr>
+                <tr>
+                  <td>Scotland County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.808</td>
+                </tr>
+                <tr>
+                  <td>Cabarrus County</td>
+                  <td>NC</td>
+                  <td class="value-positive">0.802</td>
+                </tr>
+                <tr>
+                  <td>Wayne County</td>
+                  <td>MI</td>
+                  <td class="value-positive">0.787</td>
+                </tr>
+                <tr class="table-subheader">
+                  <td colspan="3">Most Homogeneous (Lowest Entropy)</td>
+                </tr>
+                <tr>
+                  <td>Jefferson County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.150</td>
+                </tr>
+                <tr>
+                  <td>Bedford County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.160</td>
+                </tr>
+                <tr>
+                  <td>Tioga County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.170</td>
+                </tr>
+                <tr>
+                  <td>Armstrong County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.171</td>
+                </tr>
+                <tr>
+                  <td>Potter County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.174</td>
+                </tr>
+                <tr>
+                  <td>Presque Isle County</td>
+                  <td>MI</td>
+                  <td class="value-negative">0.176</td>
+                </tr>
+                <tr>
+                  <td>Elk County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.178</td>
+                </tr>
+                <tr>
+                  <td>Warren County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.188</td>
+                </tr>
+                <tr>
+                  <td>Susquehanna County</td>
+                  <td>PA</td>
+                  <td class="value-negative">0.188</td>
+                </tr>
+                <tr>
+                  <td>Keweenaw County</td>
+                  <td>MI</td>
+                  <td class="value-negative">0.189</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            As expected, the counties with the highest racial entropy &mdash; those with the most evenly distributed population shares across racial/ethnic groups &mdash; are concentrated in major metropolitan areas, including Philadelphia County (PA) and large North Carolina metros such as the Charlotte/Mecklenburg area. In contrast, the lowest entropy counties (most racially homogeneous) appear in more rural regions, including parts of northern Michigan and several counties along the northern Pennsylvania border. Early analysis suggests a correlation between population density and racial entropy, reinforcing the broader pattern: the demographic features most predictive of partisan lean are themselves interrelated, supporting the case for multivariate clustering approaches that can disentangle these overlapping signals.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 6: Preparing for Modeling -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Preparing for Modeling</h2>
+
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/eda/qq_population_density.png" alt="Side-by-side QQ plots showing population density before and after log transformation">
+            <figcaption>Figure 10: QQ diagnostic &mdash; population density before (left) and after (right) log transformation</figcaption>
+          </figure>
+
+          <p>
+            Several variables exhibit severe right skewness that would distort distance-based methods like k-means clustering. Population density is the most extreme case (skewness&nbsp;=&nbsp;11.09, kurtosis&nbsp;=&nbsp;146.6), driven by urban outliers like Philadelphia County at 11,774 people per square mile. The left panel shows the raw distribution's dramatic departure from normality. After applying a log(1+x) transformation (right panel), the distribution collapses to near-normality (skewness&nbsp;=&nbsp;0.36, kurtosis&nbsp;=&nbsp;0.67). Similar treatment was applied to total population, median household income, median home value, and median gross rent. StandardScaler standardization (zero mean, unit variance) was then applied to all 32 continuous features, producing a modeling-ready dataset where no single variable dominates the Euclidean distance calculations that drive k-means cluster assignment.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
   </main>
-  
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
@@ -81,7 +511,7 @@
       </div>
     </div>
   </footer>
-  
+
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -86,6 +86,324 @@
       </div>
     </section>
 
+    <!-- Section: Building the Dataset -->
+    <section class="section">
+      <div class="container">
+        <h2>Building the Dataset</h2>
+
+        <div class="content-block">
+          <p>
+            The final analysis-ready dataset was assembled from three independent, authoritative sources. Each was acquired programmatically, validated for completeness, and merged through a reproducible pipeline that preserved all 750 county-year observations with zero nulls.
+          </p>
+        </div>
+
+        <!-- Pipeline Flow Diagram -->
+        <div class="pipeline-flow">
+          <div class="pipeline-sources">
+            <div class="pipeline-node">
+              NHGIS Demographic Panel
+              <span class="node-dim">750 &times; 35 &mdash; via IPUMS API</span>
+            </div>
+            <div class="pipeline-node">
+              ACS Supplement
+              <span class="node-dim">750 &times; 24 &mdash; via Census Bureau API</span>
+            </div>
+            <div class="pipeline-node">
+              MIT Election Returns
+              <span class="node-dim">94,151 &times; 12 &mdash; filtered &amp; aggregated</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">&#10132;</div>
+          <div class="pipeline-result">
+            Master Dataset
+            <span class="node-dim">750 rows &times; 39 variables &mdash; 0 nulls</span>
+          </div>
+        </div>
+
+        <!-- Source Details Table -->
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Access Method</th>
+                <th>Raw Size</th>
+                <th>Key Variables Contributed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>NHGIS Demographic Panel</strong></td>
+                <td>IPUMS NHGIS API (ipumspy)</td>
+                <td>750 &times; 35</td>
+                <td>Race/ethnicity, education, income, housing, commuting, density</td>
+              </tr>
+              <tr>
+                <td><strong>ACS Supplement</strong></td>
+                <td>Census Bureau API</td>
+                <td>750 &times; 24</td>
+                <td>Age brackets (seniors 65+, young adults 18&ndash;24), foreign-born population</td>
+              </tr>
+              <tr>
+                <td><strong>MIT MEDSL Election Returns</strong></td>
+                <td>Direct download (Harvard Dataverse)</td>
+                <td>94,151 &times; 12</td>
+                <td>Candidate votes, total votes, party &rarr; dem_pct, rep_pct, dem_margin</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Data Quality Callouts -->
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Data Fix</span>
+            <h4>North Carolina Election Totals</h4>
+            <p>
+              NC lacked consolidated &ldquo;TOTAL&rdquo; mode rows&mdash;votes were split by method (absentee, early, election day). Resolved via <code>groupby</code> aggregation on county&nbsp;+&nbsp;year&nbsp;+&nbsp;party, producing verified totals for all three states.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Temporal Alignment</span>
+            <h4>ACS-to-Election Year Mapping</h4>
+            <p>
+              ACS 5-year estimates were matched to the nearest election cycle: 2012&ndash;2016 ACS &rarr; 2016 election, 2016&ndash;2020 ACS &rarr; 2020, 2020&ndash;2024 ACS &rarr; 2024. Each window captures the demographic snapshot most proximate to election day.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Validation</span>
+            <h4>Cross-Source Verification</h4>
+            <p>
+              Overlapping variables from the two independent demographic pipelines (NHGIS and ACS) were compared. Total Population and Median Household Income showed <strong>0.0 discrepancy</strong> across all 750 rows, confirming both draw from identical underlying Census Bureau estimates.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Integration</span>
+            <h4>Complementary Sources</h4>
+            <p>
+              Each source contributed unique variables not available elsewhere: NHGIS provided 28 demographic rates, the ACS supplement added age-bracket breakdowns and foreign-born percentages, and MIT MEDSL supplied the election outcome variables. The merge unified these into a single analytical panel on the composite key <code>(county_fips&nbsp;+&nbsp;election_year)</code>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Merge Verification Stats -->
+        <div class="stat-grid-3">
+          <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Complementary Sources</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">750</div>
+            <div class="stat-label">Rows Maintained</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Nulls Introduced</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section: Cleaning & Scaling -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Cleaning &amp; Scaling</h2>
+
+        <div class="content-block">
+          <p>
+            With the merged dataset in hand, three preprocessing stages prepared the data for distance-based modeling: outlier assessment, multicollinearity removal, and distributional transformations. The goal was to ensure no single variable dominates clustering distances while preserving real demographic variation.
+          </p>
+        </div>
+
+        <!-- Outlier Detection -->
+        <div class="content-block">
+          <h3>Outlier Detection (IQR Method)</h3>
+          <p>
+            An interquartile range screen flagged observations beyond 1.5&times;IQR from Q1 or Q3. All flagged values were investigated and determined to represent genuine demographic extremes&mdash;not data errors.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Outlier %</th>
+                  <th>Key Driver</th>
+                  <th>Decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>pct_asian</strong></td>
+                  <td>12.3%</td>
+                  <td>Structural &mdash; concentrated in urban counties (Wayne, Mecklenburg, Allegheny)</td>
+                  <td><span class="tag-retained">Retained</span></td>
+                </tr>
+                <tr>
+                  <td><strong>population_density</strong></td>
+                  <td>10.9%</td>
+                  <td>Philadelphia County at 11,774 / sq&nbsp;mi; Delaware County at 3,151</td>
+                  <td><span class="tag-retained">Retained</span></td>
+                </tr>
+                <tr>
+                  <td><strong>total_population</strong></td>
+                  <td>9.6%</td>
+                  <td>Right-skewed county size distribution typical of US counties</td>
+                  <td><span class="tag-retained">Retained</span></td>
+                </tr>
+                <tr>
+                  <td><strong>pct_public_transit</strong></td>
+                  <td>8.5%</td>
+                  <td>Near-zero rural vs. significant metro usage</td>
+                  <td><span class="tag-retained">Retained</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            All outliers were retained. These extreme values encode the urban-rural divide central to our research questions&mdash;removing them would erase the very signal we aim to study. Log transformations (below) address their distributional impact on distance calculations.
+          </p>
+        </div>
+
+        <!-- Multicollinearity Cleanup -->
+        <div class="content-block">
+          <h3>Multicollinearity Cleanup</h3>
+          <p>
+            Pairwise Pearson correlation analysis identified four variables that were perfect complements or near-duplicates of retained features. Removing them prevents redundant dimensions from inflating their influence on cluster assignments.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dropped Variable</th>
+                  <th>Reason</th>
+                  <th>Correlated With</th>
+                  <th>|r|</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag-dropped">Dropped</span> pct_renter_occupied</td>
+                  <td>Perfect complement (sums to 100%)</td>
+                  <td>pct_owner_occupied</td>
+                  <td class="value-negative">1.000</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-dropped">Dropped</span> pct_no_hs_diploma</td>
+                  <td>Perfect complement (sums to 100%)</td>
+                  <td>pct_hs_or_higher</td>
+                  <td class="value-negative">1.000</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-dropped">Dropped</span> pct_white</td>
+                  <td>Near-duplicate; NH White is more precise</td>
+                  <td>pct_non_hispanic_white</td>
+                  <td class="value-negative">0.991</td>
+                </tr>
+                <tr>
+                  <td><span class="tag-dropped">Dropped</span> land_area_sqmi</td>
+                  <td>Intermediate variable</td>
+                  <td>Only used to derive population_density</td>
+                  <td>&mdash;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Log Transformations -->
+        <div class="content-block">
+          <h3>Log Transformations</h3>
+          <p>
+            Five heavily right-skewed variables received <code>log(1+x)</code> transformations to bring their distributions closer to normality before standardization:
+          </p>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Skewness (Before)</th>
+                  <th>Skewness (After)</th>
+                  <th>Reduction</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>population_density</strong></td>
+                  <td><span class="skew-before">11.09</span></td>
+                  <td><span class="skew-after">0.36</span></td>
+                  <td>97%</td>
+                </tr>
+                <tr>
+                  <td><strong>total_population</strong></td>
+                  <td><span class="skew-before">4.11</span></td>
+                  <td><span class="skew-after">0.27</span></td>
+                  <td>93%</td>
+                </tr>
+                <tr>
+                  <td><strong>median_home_value</strong></td>
+                  <td><span class="skew-before">1.49</span></td>
+                  <td><span class="skew-after">0.39</span></td>
+                  <td>74%</td>
+                </tr>
+                <tr>
+                  <td><strong>median_gross_rent</strong></td>
+                  <td><span class="skew-before">1.36</span></td>
+                  <td><span class="skew-after">0.68</span></td>
+                  <td>50%</td>
+                </tr>
+                <tr>
+                  <td><strong>median_household_income</strong></td>
+                  <td><span class="skew-before">1.05</span></td>
+                  <td><span class="skew-after">0.28</span></td>
+                  <td>73%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            After log transformation, <strong>StandardScaler</strong> (zero mean, unit variance) was applied to all 32 continuous features, producing a dataset where no single variable dominates the Euclidean distance calculations that drive k-means cluster assignment.
+          </p>
+        </div>
+
+        <!-- Feature Classification -->
+        <div class="content-block">
+          <h3>Final Feature Taxonomy</h3>
+          <p>
+            The 39 variables in the final dataset fall into four functional categories:
+          </p>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Identifiers / Categorical</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">28</div>
+              <div class="stat-label">Rates &amp; Percentages</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Medians / Absolute Values</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">3</div>
+              <div class="stat-label">Derived / Scale-Dependent</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- Section 2: The Electoral Landscape -->
     <section class="section">
       <div class="container">

@@ -41,8 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const navLinks = document.querySelectorAll('.nav-link');
   
   navLinks.forEach(link => {
+    link.classList.remove('active');
     const href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      link.classList.remove('disabled');
       link.classList.add('active');
     }
   });

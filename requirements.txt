@@ -1,5 +1,6 @@
 census
 geopandas
+ipykernel
 ipumspy
 jupyter
 matplotlib
@@ -10,4 +11,6 @@ python-dotenv
 scikit-learn
 scipy
 seaborn
+shap
 us
+xgboost

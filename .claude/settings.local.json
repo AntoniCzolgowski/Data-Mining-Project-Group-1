@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr:*)",
+      "Bash(python -c \":*)",
+      "Bash(python -m venv .venv)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/python --version)",
+      "Bash(rm -rf .venv)",
+      "Bash(py -3.13 -m venv .venv)"
+    ]
+  }
+}

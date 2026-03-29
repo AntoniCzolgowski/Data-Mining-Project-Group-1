@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, davies_bouldin_score
 
 # load fips and county names
 df = pd.read_csv(
@@ -46,6 +46,7 @@ for k in range(2, 11):
     rows.append({
         "k": k,
         "silhouette": silhouette_score(cleaned_df, labels),
+        "davies_bouldin": davies_bouldin_score(cleaned_df, labels),
         "min_cluster_size": cluster_counts.min(),
         "max_cluster_size": cluster_counts.max()
     })

@@ -7,7 +7,8 @@
       "Bash(.venv/Scripts/pip install:*)",
       "Bash(.venv/Scripts/python --version)",
       "Bash(rm -rf .venv)",
-      "Bash(py -3.13 -m venv .venv)"
+      "Bash(py -3.13 -m venv .venv)",
+      "Bash(.venv/Scripts/python -c \":*)"
     ]
   }
 }

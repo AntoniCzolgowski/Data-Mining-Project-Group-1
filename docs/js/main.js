@@ -150,6 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
     revealObserver.observe(el);
   });
 
+  // Also observe model cards (slide-in animation)
+  document.querySelectorAll('.reveal-on-scroll-card').forEach(el => {
+    revealObserver.observe(el);
+  });
+
   // ---------- Console Welcome Message ----------
   console.log('%c🎓 CU Boulder Data Mining Project', 'font-size: 16px; font-weight: bold; color: #CFB87C;');
   console.log('%cGroup 1: Sam Goodell, Will Creager, Antoni Czolgowski', 'font-size: 12px; color: #565A5C;');

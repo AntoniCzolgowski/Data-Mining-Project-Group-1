@@ -8,7 +8,22 @@
       "Bash(.venv/Scripts/python --version)",
       "Bash(rm -rf .venv)",
       "Bash(py -3.13 -m venv .venv)",
-      "Bash(.venv/Scripts/python -c \":*)"
+      "Bash(.venv/Scripts/python -c \":*)",
+      "Bash(python3 -c \":*)",
+      "Bash(grep -l \"state\\\\|LOSO\\\\|leave.one\" notebooks/*.ipynb)",
+      "Bash(grep -l \"diversity\\\\|threshold\" notebooks/*.ipynb)",
+      "Bash(grep \"7\\\\.15\\\\|odds\" notebooks/classification_antoni_deepdive*.ipynb)",
+      "Bash(grep -i \"diversity.*threshold\\\\|threshold.*diversity\\\\|7.15\\\\|odds\" DEEPDIVE*.md MILESTONE*.md)",
+      "Bash(wc -l \"/c/Users/Antoni/OneDrive/Pulpit/CuBoulder/2 sem/Data Mining CSCI 5502/project/Data-Mining-Project-Group-1/docs\"/*.html)",
+      "Bash(grep -r \"0\\\\.[0-9]\\\\{3,4\\\\}\" notebooks/classification_antoni.ipynb)",
+      "Bash(grep -E \"weighted|Binary|0\\\\.[0-9]{3,4}\" notebooks/classification_antoni_deepdive.ipynb)",
+      "Bash(grep -E \"0\\\\.[0-9]{2,4}\")",
+      "Bash(find . -name \"*.ipynb\" -type f -exec grep -l \"regression\\\\|OLS\\\\|linear model\\\\|coef\\\\|coefficient\" {} \\\\;)",
+      "Bash(grep -E \"\\\\\\\\[\\\\[|confusion matrix|array\" notebooks/classification_antoni.ipynb)",
+      "Bash(grep -E \"linreg|OLS|regression|coef|intercept|r2|R2|R-squared\" notebooks/*.ipynb)",
+      "Bash(grep -l \"LinearRegression\\\\|OLS\\\\|r2_score\\\\|coefficient\" notebooks/*.ipynb)",
+      "Bash(grep \"Accuracy.*0\\\\.77\\\\|Accuracy.*0\\\\.72\" notebooks/*.ipynb)",
+      "Bash(python -c ':*)"
     ]
   }
 }

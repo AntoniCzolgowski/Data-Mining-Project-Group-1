@@ -79,7 +79,7 @@
 
         <div class="content-block">
           <p>
-            Our <a href="eda.html">EDA</a> revealed that no single demographic feature explains electoral volatility. So we attacked the problem from three directions: <strong>supervised classification</strong> to predict volatility quintiles, <strong>regression</strong> to quantify continuous volatility scores, and <strong>unsupervised clustering</strong> to discover natural county archetypes from demographics alone. K-Means (k=5) revealed five distinct profiles&mdash;from aging rural communities to high-diversity urban centers&mdash;and one cluster turned out to be exclusively North Carolina counties with extreme volatility. We reference these archetypes throughout this analysis to ground the models in recognizable county types.
+            Our <a href="eda.html">EDA</a> revealed that no single demographic feature explains electoral volatility. So we attacked the problem from three directions: <strong>supervised classification</strong> to predict volatility quintiles, <strong>regression</strong> to quantify continuous volatility scores, and <strong>unsupervised clustering</strong> to discover natural county archetypes from demographics alone. K-Means (k=5) revealed five distinct profiles, from aging rural communities to high-diversity urban centers, and one cluster turned out to be exclusively North Carolina counties with extreme volatility. We reference these archetypes throughout this analysis to ground the models in recognizable county types.
           </p>
         </div>
 
@@ -117,7 +117,7 @@
               <tr>
                 <td><strong>High-Poverty Rural (Cluster 3)</strong></td>
                 <td>28</td>
-                <td>35% Black, 21% poverty, small/rural (38k pop) &mdash; <em>NC only</em></td>
+                <td>35% Black, 21% poverty, small/rural (38k pop), <em>NC only</em></td>
                 <td style="background: rgba(192, 57, 43, 0.15); font-weight: 700; color: #c0392b;">Highest (Q5 avg: 4.6)</td>
               </tr>
               <tr>
@@ -134,6 +134,9 @@
               </tr>
             </tbody>
           </table>
+          <p style="margin-top: var(--spacing-sm); font-size: 0.9rem; color: var(--cu-dark-gray); font-style: italic;">
+            Volatility was measured per cluster by cross-referencing each county&rsquo;s K-Means cluster assignment with its volatility quintile (Q1&ndash;Q5). The &ldquo;Q5 avg: 4.6&rdquo; for Cluster&nbsp;3 means that on a 1&ndash;5 scale, these counties average 4.6, with 22 of 28 falling in the highest volatility class (Q5).
+          </p>
         </div>
 
       </div>
@@ -146,7 +149,7 @@
 
         <div class="content-block">
           <p>
-            We measure electoral volatility as <em>how much</em> a county&rsquo;s partisan balance shifts between elections, not simply who wins. Our composite volatility score (<code>vol_z_abs_sum</code>) captures the absolute z-scored margin swings across 2016&ndash;2020&ndash;2024. We then binned all 250 counties into five equal quintiles&mdash;Q1 (Very Stable) through Q5 (Highly Volatile)&mdash;giving us a balanced 5-class target with exactly 50 counties per class.
+            We measure electoral volatility as <em>how much</em> a county&rsquo;s partisan balance shifts between elections, not simply who wins. Our composite volatility score (<code>vol_z_abs_sum</code>) captures the absolute z-scored margin swings across 2016&ndash;2020&ndash;2024. We then binned all 250 counties into five equal quintiles, from Q1 (Very Stable) through Q5 (Highly Volatile), giving us a balanced 5-class target with exactly 50 counties per class.
           </p>
         </div>
 
@@ -158,7 +161,37 @@
         <div class="content-block">
           <h3>Two Complementary Lenses</h3>
           <p>
-            We approached prediction from two angles. <strong>Classification</strong> asks: &ldquo;which volatility bucket does this county belong to?&rdquo;&mdash;useful for campaign triage when you need a quick stable-vs-volatile label. <strong>Regression</strong> predicts the continuous <code>vol_z_abs_sum</code> score directly, asking &ldquo;exactly how volatile is this county?&rdquo;&mdash;useful for ranking counties within the same class and quantifying the magnitude of expected swing.
+            We approached prediction from two angles. <strong>Classification</strong> asks: "which volatility bucket does this county belong to?" This is useful for campaign triage when you need a quick stable-vs-volatile label. <strong>Regression</strong> predicts the continuous volatility score directly, answering "exactly how volatile is this county?" This is valuable for ranking counties within the same class and quantifying the magnitude of expected swing.
+          </p>
+        </div>
+
+        <!-- Classification Pipeline Flow -->
+        <div class="content-block">
+          <h3>Classification Pipeline</h3>
+        </div>
+        <div class="pipeline-flow">
+          <div class="pipeline-sources">
+            <div class="pipeline-node">
+              28 Standardized Features
+              <span class="node-dim">Demographics, income, housing, commuting</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">&#10132;</div>
+          <div class="pipeline-sources">
+            <div class="pipeline-node">
+              Nested Cross-Validation
+              <span class="node-dim">Outer 5-fold &times; Inner 3-fold</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">&#10132;</div>
+          <div class="pipeline-result">
+            Volatility Predictions
+            <span class="node-dim">5-class &amp; binary classification</span>
+          </div>
+        </div>
+        <div class="content-block">
+          <p>
+            All classification models were evaluated with nested cross-validation: an outer 5-fold loop for unbiased performance estimation, and an inner 3-fold loop for hyperparameter tuning. This prevents information leakage and gives honest estimates of how each model would perform on truly unseen counties.
           </p>
         </div>
 
@@ -184,25 +217,25 @@
                 <td><strong>Pooled (All States)</strong></td>
                 <td>0.411</td>
                 <td>8 features incl. rent, age, poverty, entropy</td>
-                <td class="hm-best">log_median_gross_rent (&beta;&nbsp;=&nbsp;0.879)</td>
+                <td class="hm-best">Median Gross Rent (&beta;&nbsp;=&nbsp;0.879)</td>
               </tr>
               <tr>
                 <td><strong>Pennsylvania</strong></td>
                 <td class="hm-best">0.674</td>
-                <td>median_age, unemployment, race_entropy_norm, rent</td>
-                <td>race_entropy_norm</td>
+                <td>Median Age, Unemployment, Racial Diversity, Rent</td>
+                <td>Racial Diversity Index</td>
               </tr>
               <tr>
                 <td><strong>Michigan</strong></td>
                 <td>0.331</td>
-                <td>pct_bachelors_plus, pct_carpool</td>
-                <td>pct_bachelors_plus</td>
+                <td>% Bachelor&rsquo;s Degree+, % Carpool</td>
+                <td>% Bachelor&rsquo;s Degree+</td>
               </tr>
               <tr>
                 <td><strong>North Carolina</strong></td>
                 <td>0.435</td>
-                <td>pct_black, pct_hispanic, pct_below_poverty, rent, carpool</td>
-                <td>pct_below_poverty</td>
+                <td>% Black, % Hispanic, % Below Poverty, Rent, % Carpool</td>
+                <td>% Below Poverty Line</td>
               </tr>
             </tbody>
           </table>
@@ -210,38 +243,10 @@
 
         <div class="content-block">
           <p>
-            A striking finding: the pooled model&rsquo;s strongest coefficient belongs to <code>log_median_gross_rent</code> (&beta;&nbsp;=&nbsp;0.879)&mdash;a housing cost variable that captures the intersection of urbanization, economic pressure, and demographic transition. This is the <strong>only feature that generalizes</strong> across all three states in both the classification and regression pipelines, hinting that housing affordability stress may be a universal undercurrent of electoral instability.
+            A striking finding: the pooled model&rsquo;s strongest coefficient belongs to Median Gross Rent (&beta;&nbsp;=&nbsp;0.879), a housing cost variable that captures the intersection of urbanization, economic pressure, and demographic transition. This is the <strong>only feature that generalizes</strong> across all three states in both the classification and regression pipelines, suggesting that housing affordability stress may be a universal undercurrent of electoral instability.
           </p>
           <p>
-            Pennsylvania stands out with R&sup2;&nbsp;=&nbsp;0.674&mdash;demographics explain nearly two-thirds of PA&rsquo;s volatility variance, far more than Michigan (0.331) or North Carolina (0.435). This suggests PA&rsquo;s electoral instability is more structurally &ldquo;readable&rdquo; from census data alone, while Michigan&rsquo;s volatility depends on harder-to-measure factors like local political organizing and candidate-specific effects.
-          </p>
-        </div>
-
-        <!-- Pipeline Flow -->
-        <div class="pipeline-flow">
-          <div class="pipeline-sources">
-            <div class="pipeline-node">
-              28 Standardized Features
-              <span class="node-dim">Demographics, income, housing, commuting</span>
-            </div>
-          </div>
-          <div class="pipeline-arrow">&#10132;</div>
-          <div class="pipeline-sources">
-            <div class="pipeline-node">
-              Nested Cross-Validation
-              <span class="node-dim">Outer 5-fold &times; Inner 3-fold</span>
-            </div>
-          </div>
-          <div class="pipeline-arrow">&#10132;</div>
-          <div class="pipeline-result">
-            Volatility Predictions
-            <span class="node-dim">5-class &amp; binary classification</span>
-          </div>
-        </div>
-
-        <div class="content-block">
-          <p>
-            All models were evaluated with nested cross-validation&mdash;an outer 5-fold loop for unbiased performance estimation, and an inner 3-fold loop for hyperparameter tuning. This prevents information leakage and gives honest estimates of how each model would perform on truly unseen counties.
+            Pennsylvania stands out with R&sup2;&nbsp;=&nbsp;0.674, meaning demographics explain nearly two-thirds of PA&rsquo;s volatility variance. That is far more than Michigan (0.331) or North Carolina (0.435). This suggests PA&rsquo;s electoral instability is more structurally "readable" from census data alone, while Michigan&rsquo;s volatility depends on harder-to-measure factors like local political organizing and candidate-specific effects.
           </p>
         </div>
 
@@ -255,7 +260,7 @@
 
         <div class="content-block">
           <p>
-            Three classifiers competed on the 5-class volatility prediction task. We started with Random Forest as our baseline, then tested whether gradient boosting (XGBoost) or maximum-margin (SVM) approaches could improve on it. Scroll through to see how each model performed&mdash;or use the interactive comparison below.
+            Three classifiers competed on the 5-class volatility prediction task. We started with Random Forest as our baseline, then tested whether gradient boosting (XGBoost) or maximum-margin (SVM) approaches could improve on it.
           </p>
         </div>
 
@@ -266,7 +271,7 @@
             Random Forest
           </h3>
           <p>
-            An ensemble of 300 decision trees with balanced class weights. Random Forest handles nonlinear feature interactions naturally and provides built-in feature importance. With an accuracy of <strong>36.8%</strong> and macro F1 of <strong>0.362</strong>, it established our baseline&mdash;significantly above the 20% random-chance threshold for 5 balanced classes, but clearly struggling with the middle quintiles.
+            An ensemble of 300 decision trees with balanced class weights. Random Forest handles nonlinear feature interactions naturally and provides built-in feature importance. With an accuracy of <strong>36.8%</strong> and macro F1 of <strong>0.362</strong>, it established our baseline. That is significantly above the 20% random-chance threshold for 5 balanced classes, though it clearly struggled with the middle quintiles.
           </p>
           <p>
             <strong>Cluster insight:</strong> RF performed best on Q5 (Highly Volatile) counties, which are dominated by High-Poverty Rural (Cluster 3) communities. Their extreme demographic profile makes them the most distinctive signal in the data.
@@ -280,7 +285,7 @@
             XGBoost
           </h3>
           <p>
-            Gradient boosting with 100 randomized hyperparameter configurations. XGBoost earned the highest 5-class accuracy (<strong>38.8%</strong>) and macro F1 (<strong>0.387</strong>)&mdash;a meaningful improvement in a 5-class setting. Its key advantage: better calibration on the middle quintiles (Q3: 0.356 F1 vs. RF&rsquo;s 0.257), suggesting it captures subtler demographic gradients that tree ensembles miss.
+            Gradient boosting with 100 randomized hyperparameter configurations. XGBoost earned the highest 5-class accuracy (<strong>38.8%</strong>) and macro F1 (<strong>0.387</strong>), a meaningful improvement in a 5-class setting. Its key advantage was better calibration on the middle quintiles (Q3: 0.356 F1 vs. RF&rsquo;s 0.257), suggesting it captures subtler demographic gradients that tree ensembles miss.
           </p>
         </div>
 
@@ -545,7 +550,7 @@
 
         <div class="content-block">
           <p>
-            A clear pattern emerges: all three models excel at the extremes (Q1 and Q5) but struggle with the middle quintiles. The confusion matrices show a &ldquo;smearing&rdquo; effect where Q2&ndash;Q4 counties bleed into adjacent classes. This reflects genuine demographic overlap between moderate-volatility counties rather than a modeling shortcoming&mdash;the extremes are simply where demographics tell the clearest story.
+            A clear pattern emerges: all three models excel at the extremes (Q1 and Q5) but struggle with the middle quintiles. The confusion matrices show a "smearing" effect where Q2&ndash;Q4 counties bleed into adjacent classes. This reflects genuine demographic overlap between moderate-volatility counties rather than a modeling shortcoming. The extremes are simply where demographics tell the clearest story.
           </p>
         </div>
 
@@ -578,7 +583,7 @@
 
         <figure class="figure-container">
           <img src="images/methods/deepdive_binary_roc_all_models.png" alt="ROC curves comparing all models on binary volatile vs stable classification" style="max-width: 700px; margin: 0 auto;">
-          <figcaption>Binary ROC curves &mdash; Random Forest achieves AUC = 0.828, outperforming all competitors</figcaption>
+          <figcaption>Binary ROC curves: Random Forest achieves AUC = 0.828, outperforming all competitors</figcaption>
         </figure>
 
         <!-- Binary Scoreboard -->
@@ -636,14 +641,14 @@
             <span class="callout-tag">Cluster Insight</span>
             <h4>Aging Rural (Cluster 4) = Predictably Stable</h4>
             <p>
-              These 115 homogeneous, older counties&mdash;spread across all three states (50 MI, 39 PA, 26 NC)&mdash;were almost perfectly classified as low-volatility. Median age 47, under 1% foreign-born, and the highest homeownership rate of any cluster (79%): their demographics tell a consistent story of partisan anchoring.
+              These 115 homogeneous, older counties, spread across all three states (50 MI, 39 PA, 26 NC), were almost perfectly classified as low-volatility. Median age 47, under 1% foreign-born, and the highest homeownership rate of any cluster (79%). Their demographics tell a consistent story of partisan anchoring.
             </p>
           </div>
           <div class="callout-card">
             <span class="callout-tag">Cluster Insight</span>
             <h4>High-Poverty Rural (Cluster 3) = Volatile Signal</h4>
             <p>
-              With 22 of 28 counties rated Highly Volatile (Q5) and an average quintile of 4.6, this cluster is the single clearest volatility signal in our dataset. Every county in this cluster is in North Carolina&mdash;concentrated in the eastern part of the state along the historic Black Belt.
+              With 22 of 28 counties rated Highly Volatile (Q5) and an average quintile of 4.6, this cluster is the single clearest volatility signal in our dataset. Every county in this cluster is in North Carolina, concentrated in the eastern part of the state along the historic Black Belt.
             </p>
           </div>
         </div>
@@ -652,10 +657,10 @@
         <div class="content-block">
           <h3>Inside Cluster 3: North Carolina&rsquo;s Volatility Engine</h3>
           <p>
-            One of our most revealing discoveries is that Cluster 3 (High-Poverty Rural) is <strong>entirely composed of North Carolina counties</strong>&mdash;all 28 of them. No Pennsylvania or Michigan county shares this demographic profile. This geographic exclusivity explains a lot: it&rsquo;s why our cross-state models struggle, and it&rsquo;s why NC&rsquo;s volatility responds to different levers than the other two states.
+            One of our most revealing discoveries is that Cluster 3 (High-Poverty Rural) is <strong>entirely composed of North Carolina counties</strong>, all 28 of them. No Pennsylvania or Michigan county shares this demographic profile. This geographic exclusivity explains a lot. It is why our cross-state models struggle, and why NC&rsquo;s volatility responds to different levers than the other two states.
           </p>
           <p>
-            These counties sit at the intersection of every high-volatility signal in our data: racial diversity (avg 35% Black population), deep poverty (21% below poverty line), low education (only 17% with a bachelor&rsquo;s degree), and small populations (avg 38k). The flagship example is <strong>Robeson County</strong>&mdash;the single most volatile county in our entire 250-county dataset (<code>vol_z_abs_sum</code>&nbsp;=&nbsp;8.03). Robeson has the highest racial entropy score in the study, the lowest education level, and a poverty z-score over 3 standard deviations above the mean. It&rsquo;s not a suburb in transition or a college town with shifting demographics&mdash;it&rsquo;s a community where deep structural inequality creates genuinely unpredictable electoral dynamics.
+            These counties sit at the intersection of every high-volatility signal in our data: racial diversity (avg 35% Black population), deep poverty (21% below poverty line), low education (only 17% with a bachelor&rsquo;s degree), and small populations (avg 38k). The flagship example is <strong>Robeson County</strong>, the single most volatile county in our entire 250-county dataset (volatility score of 8.03). Robeson has the highest racial entropy score in the study, the lowest education level, and a poverty rate over 3 standard deviations above the mean. Unlike suburban counties where demographic shifts gradually reshape voting patterns, Robeson&rsquo;s longstanding structural inequality keeps the electorate in constant flux.
           </p>
           <p>
             The fact that K-Means, with no knowledge of election results or state boundaries, isolated these 28 counties into a single cluster using demographics alone validates the connection between socioeconomic structure and electoral instability. The algorithm found the volatility engine before we told it to look for one.
@@ -672,18 +677,18 @@
 
         <div class="content-block">
           <p>
-            Here&rsquo;s a creative twist on logistic regression. Instead of predicting volatility, we trained a model to predict <strong>partisan lean</strong> from demographics alone. The insight: counties where the model confidently predicts &ldquo;blue&rdquo; but voters choose &ldquo;red&rdquo; (or vice versa) represent <em>demographic misfits</em>&mdash;places where the electorate defies its demographic destiny. We hypothesized that this tension would correlate with volatility. It does.
+            We also applied logistic regression in a creative way. Instead of predicting volatility, we trained a model to predict <strong>partisan lean</strong> from demographics alone. The key insight is that counties where the model confidently predicts "blue" but voters choose "red" (or vice versa) represent <em>demographic misfits</em>, places where the electorate defies its demographic expectations. We hypothesized that this tension would correlate with volatility, and it does.
           </p>
         </div>
 
         <figure class="figure-container reveal-on-scroll">
           <img src="images/methods/misfit_scatter.png" alt="Scatter plot of demographic misfit scores vs volatility scores showing positive correlation">
-          <figcaption>The misfit scatter &mdash; counties that defy their demographic predictions tend to be more volatile</figcaption>
+          <figcaption>The misfit scatter: counties that defy their demographic predictions tend to be more volatile</figcaption>
         </figure>
 
         <figure class="figure-container reveal-on-scroll delay-1">
           <img src="images/methods/choropleth_misfit_score.png" alt="Choropleth map of misfit scores across PA, MI, and NC">
-          <figcaption>Geographic distribution of demographic misfits &mdash; note the concentration in transitional suburban belts</figcaption>
+          <figcaption>Geographic distribution of demographic misfits, with notable concentration in transitional suburban belts</figcaption>
         </figure>
 
         <div class="callout-grid">
@@ -691,7 +696,7 @@
             <span class="callout-tag">Key Finding</span>
             <h4>&ldquo;Surprise Dem&rdquo; Misfits</h4>
             <p>
-              Counties whose demographics say &ldquo;Republican&rdquo; but that vote Democratic tend to be university towns and resort communities with unique electorates&mdash;places like Marquette County, MI and Centre County, PA.
+              Counties whose demographics say "Republican" but that vote Democratic tend to be university towns and resort communities with unique electorates, such as Marquette County, MI and Centre County, PA.
             </p>
           </div>
           <div class="callout-card">
@@ -704,13 +709,13 @@
         </div>
 
         <figure class="figure-container reveal-on-scroll delay-2">
-          <img src="images/methods/deepdive_misfit_by_volatility.png" alt="Misfit scores broken down by volatility class showing increasing misfit with volatility" style="max-width: 700px; margin: 0 auto;">
-          <figcaption>Misfit scores rise consistently with volatility class &mdash; demographic tension predicts electoral instability</figcaption>
+          <img src="images/methods/deepdive_misfit_by_volatility.png" alt="Misfit scores broken down by volatility class showing increasing misfit with volatility" style="max-width: 100%; margin: 0 auto;">
+          <figcaption>Misfit scores rise consistently with volatility class, showing that demographic tension predicts electoral instability</figcaption>
         </figure>
 
         <div class="content-block">
           <p>
-            The misfit detector gives us something no standard classifier can: a measure of <em>how surprising</em> a county&rsquo;s voting behavior is given its demographics. Counties with high misfit scores are exactly the places where campaigns should pay closest attention&mdash;they&rsquo;re the ones most likely to flip.
+            The misfit detector gives us something no standard classifier can: a measure of <em>how surprising</em> a county&rsquo;s voting behavior is given its demographics. Counties with high misfit scores are exactly the places where campaigns should pay closest attention, because they are the ones most likely to flip.
           </p>
         </div>
 
@@ -724,13 +729,13 @@
 
         <div class="content-block">
           <p>
-            A natural question: can a model trained on Pennsylvania and Michigan predict volatility in North Carolina? We tested this with Leave-One-State-Out (LOSO) cross-validation, where each state is held out in turn. The answer was revealing&mdash;not because the models worked, but because of <em>how</em> they failed.
+            A natural question: can a model trained on Pennsylvania and Michigan predict volatility in North Carolina? We tested this with Leave-One-State-Out (LOSO) cross-validation, where each state is held out in turn. The answer was revealing, not because the models worked, but because of <em>how</em> they failed.
           </p>
         </div>
 
         <figure class="figure-container">
           <img src="images/methods/loso_confusion_matrices.png" alt="Three confusion matrices from LOSO cross-validation showing poor cross-state generalization">
-          <figcaption>LOSO confusion matrices &mdash; models trained on two states fail to predict the third</figcaption>
+          <figcaption>LOSO confusion matrices: models trained on two states struggle to predict the third</figcaption>
         </figure>
 
         <!-- LOSO Performance Table -->
@@ -780,13 +785,13 @@
 
         <div class="content-block">
           <p>
-            The performance gap is striking: pooled 5-class F1 of 0.387 drops to an average of just 0.195 under LOSO. Rather than exposing a weakness, this result reveals something more interesting&mdash;each state&rsquo;s volatility is driven by a <strong>unique demographic fingerprint</strong>.
+            The performance gap is striking: pooled 5-class F1 of 0.387 drops to an average of just 0.195 under LOSO. Rather than exposing a weakness, this result reveals something more interesting. Each state&rsquo;s volatility is driven by a <strong>unique demographic fingerprint</strong>.
           </p>
         </div>
 
         <figure class="figure-container reveal-on-scroll">
           <img src="images/methods/deepdive_state_feature_importance.png" alt="State-specific feature importance showing different top predictors per state" style="max-width: 750px; margin: 0 auto;">
-          <figcaption>Each state has its own volatility fingerprint &mdash; one-size-fits-all models miss this</figcaption>
+          <figcaption>Each state has its own volatility fingerprint with distinct top predictors</figcaption>
         </figure>
 
         <div class="callout-grid">
@@ -801,7 +806,7 @@
             <span class="callout-tag">Michigan</span>
             <h4>Education-Driven Volatility</h4>
             <p>
-              Bachelor&rsquo;s degree attainment is Michigan&rsquo;s key signal. The college-educated suburban swing &mdash; especially around Detroit and Grand Rapids &mdash; defines MI volatility.
+              Bachelor&rsquo;s degree attainment is Michigan&rsquo;s key signal. The college-educated suburban swing, especially around Detroit and Grand Rapids, defines MI volatility.
             </p>
           </div>
         </div>
@@ -815,9 +820,9 @@
           </div>
           <div class="callout-card">
             <span class="callout-tag">Strategic Implication</span>
-            <h4>State-Specific Models Win</h4>
+            <h4>The Power of State-Specific Models</h4>
             <p>
-              A one-size-fits-all model misses the point. The path to better predictions&mdash;and smarter campaign strategy&mdash;runs through state-specific models that respect each state&rsquo;s unique drivers.
+              While our pooled model captures broad national patterns, state-level models unlock a deeper layer of precision. By tailoring features to each state&rsquo;s unique electorate, we can build sharper predictions and more targeted campaign strategies.
             </p>
           </div>
         </div>
@@ -843,20 +848,20 @@
             <tbody>
               <tr>
                 <td><strong>Pennsylvania</strong></td>
-                <td>race_entropy_norm</td>
-                <td>race_entropy_norm</td>
+                <td>Racial Diversity Index</td>
+                <td>Racial Diversity Index</td>
                 <td style="background: rgba(26,138,92,0.30); font-weight: 700; color: #1a8a5c;">&#10003; Match</td>
               </tr>
               <tr>
                 <td><strong>Michigan</strong></td>
-                <td>pct_bachelors_plus</td>
-                <td>pct_bachelors_plus</td>
+                <td>% with Bachelor&rsquo;s Degree+</td>
+                <td>% with Bachelor&rsquo;s Degree+</td>
                 <td style="background: rgba(26,138,92,0.30); font-weight: 700; color: #1a8a5c;">&#10003; Match</td>
               </tr>
               <tr>
                 <td><strong>North Carolina</strong></td>
-                <td>pct_below_poverty</td>
-                <td>pct_below_poverty</td>
+                <td>% Below Poverty Line</td>
+                <td>% Below Poverty Line</td>
                 <td style="background: rgba(26,138,92,0.30); font-weight: 700; color: #1a8a5c;">&#10003; Match</td>
               </tr>
             </tbody>
@@ -865,10 +870,10 @@
 
         <div class="content-block">
           <p>
-            This three-for-three convergence is striking. When a nonlinear tree ensemble (XGBoost) and a linear model (OLS) independently surface the same dominant feature for each state, the signal is robust&mdash;not an artifact of a single modeling choice. Pennsylvania&rsquo;s volatility genuinely hinges on racial diversity, Michigan&rsquo;s on education levels, and North Carolina&rsquo;s on poverty rates.
+            This three-for-three convergence is striking. When a nonlinear tree ensemble (XGBoost) and a linear model (OLS) independently surface the same dominant feature for each state, the signal is robust and not an artifact of a single modeling choice. Pennsylvania&rsquo;s volatility genuinely hinges on racial diversity, Michigan&rsquo;s on education levels, and North Carolina&rsquo;s on poverty rates.
           </p>
           <p>
-            One feature bridges all three states across both methods: <code>log_median_gross_rent</code>. It appears in the pooled regression as the single strongest coefficient (&beta;&nbsp;=&nbsp;0.879) and consistently ranks among the top SHAP features nationally. Housing cost encodes a unique combination of urbanization pressure, economic vulnerability, and demographic change&mdash;making it the closest thing to a universal volatility signal in our data.
+            One feature bridges all three states across both methods: Median Gross Rent. It appears in the pooled regression as the single strongest coefficient (&beta;&nbsp;=&nbsp;0.879) and consistently ranks among the top SHAP features nationally. Housing cost encodes a unique combination of urbanization pressure, economic vulnerability, and demographic change, making it the closest thing to a universal volatility signal in our data.
           </p>
         </div>
 
@@ -882,13 +887,13 @@
 
         <div class="content-block">
           <p>
-            SHAP (SHapley Additive exPlanations) analysis peeled back the black box of our XGBoost model to reveal which features matter most&mdash;and one result stopped us in our tracks. The normalized racial entropy index, introduced on our <a href="eda.html">EDA page</a> as Shannon Entropy, emerged as the single most important predictor of electoral volatility.
+            We used SHAP (SHapley Additive exPlanations) to understand which features drive our XGBoost model&rsquo;s predictions. One result stood out clearly. The normalized racial entropy index, introduced on our <a href="eda.html">EDA page</a> as Shannon Entropy, emerged as the single most important predictor of electoral volatility.
           </p>
         </div>
 
         <figure class="figure-container">
           <img src="images/methods/xgb_shap_summary.png" alt="SHAP summary plot for XGBoost showing feature importance with race_entropy_norm at top" style="max-width: 700px; margin: 0 auto;">
-          <figcaption>SHAP summary plot &mdash; each dot is one county, with color indicating feature value (red = high, blue = low)</figcaption>
+          <figcaption>SHAP summary plot: each dot is one county, with color indicating feature value (red = high, blue = low)</figcaption>
         </figure>
 
         <div class="metric-highlight-row">
@@ -904,30 +909,30 @@
 
         <div class="content-block">
           <p>
-            At a normalized entropy of 0.552, the relationship between racial diversity and volatility undergoes a phase transition. Counties above this threshold are <strong>7.15 times more likely</strong> to be classified as high-volatility. This isn&rsquo;t a gradual increase&mdash;it&rsquo;s a sharp break. Below 0.552, diversity barely matters. Above it, it becomes the dominant predictor.
+            Our Racial Diversity Index (based on Shannon Entropy) measures how evenly distributed a county&rsquo;s population is across racial groups, on a 0&ndash;1 scale. At a score of <strong>0.552</strong>, we found a clear tipping point. Counties below this level show little connection between diversity and volatility. But once a county crosses 0.552, its odds of being classified as high-volatility jump by a factor of <strong>7.15</strong>. In practical terms, a county with a moderately mixed population is far more likely to swing than either a very homogeneous or a very diverse one.
           </p>
         </div>
 
         <figure class="figure-container reveal-on-scroll">
-          <img src="images/methods/deepdive2_diversity_threshold.png" alt="Visualization of the diversity threshold at 0.552 showing sharp volatility increase" style="max-width: 700px; margin: 0 auto;">
-          <figcaption>The diversity threshold at 0.552 &mdash; above this line, counties are 7.15&times; more likely to be volatile</figcaption>
+          <img src="images/methods/deepdive2_diversity_threshold.png" alt="Visualization of the diversity threshold at 0.552 showing sharp volatility increase" style="max-width: 100%; margin: 0 auto;">
+          <figcaption>The diversity threshold at 0.552: above this line, counties are 7.15&times; more likely to be volatile</figcaption>
         </figure>
 
         <figure class="figure-container reveal-on-scroll delay-1">
           <img src="images/methods/xgb_shap_dependence_top5.png" alt="SHAP dependence plots for top 5 features showing nonlinear effects">
-          <figcaption>SHAP dependence plots reveal nonlinear relationships &mdash; note the sharp inflection in race_entropy_norm</figcaption>
+          <figcaption>SHAP dependence plots reveal nonlinear relationships, with a sharp inflection in the Racial Diversity Index</figcaption>
         </figure>
 
         <div class="content-block">
           <h3>Diversity Meets Poverty</h3>
           <p>
-            The threshold effect intensifies when diversity intersects with economic distress. High-diversity <em>and</em> high-poverty counties&mdash;dominated by the High-Poverty Rural (Cluster 3) archetype&mdash;show the strongest volatility signal in the entire dataset. This is exactly the profile of those 28 North Carolina counties: their average racial entropy sits well above the 0.552 threshold, and their poverty rates are the highest of any cluster. When both conditions coincide, volatility doesn&rsquo;t just increase&mdash;it compounds.
+            The threshold effect intensifies when diversity intersects with economic distress. High-diversity <em>and</em> high-poverty counties, dominated by the High-Poverty Rural (Cluster 3) archetype, show the strongest volatility signal in the entire dataset. This is exactly the profile of those 28 North Carolina counties: their average racial entropy sits well above the 0.552 threshold, and their poverty rates are the highest of any cluster. When both conditions are present together, volatility rises significantly more than either factor alone would predict.
           </p>
         </div>
 
         <figure class="figure-container reveal-on-scroll delay-2">
-          <img src="images/methods/deepdive_diversity_poverty_interaction.png" alt="Interaction plot showing diversity x poverty amplifying volatility" style="max-width: 700px; margin: 0 auto;">
-          <figcaption>The diversity&ndash;poverty interaction &mdash; when both are high, volatility explodes</figcaption>
+          <img src="images/methods/deepdive_diversity_poverty_interaction.png" alt="Interaction plot showing diversity x poverty amplifying volatility" style="max-width: 100%; margin: 0 auto;">
+          <figcaption>The diversity&ndash;poverty interaction: when both are high, volatility rises sharply</figcaption>
         </figure>
 
         <div class="callout-grid">
@@ -980,7 +985,7 @@
           <div class="preview-card reveal-on-scroll delay-3">
             <div class="preview-icon">&#128200;</div>
             <h4>Temporal Consistency</h4>
-            <p>Does the swing map shift between 2016, 2020, and 2024&mdash;or do the same counties keep swinging?</p>
+            <p>Does the swing map shift between 2016, 2020, and 2024, or do the same counties keep swinging?</p>
             <span class="preview-badge">Research Question 8</span>
           </div>
         </div>

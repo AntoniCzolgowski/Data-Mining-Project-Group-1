@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Methods - Data Mining Project - CU Boulder CSCI 5502">
+  <meta name="description" content="Methods & Models - Data Mining Project - CU Boulder CSCI 5502">
   <meta name="authors" content="Sam Goodell, Will Creager, Antoni Czolgowski">
-  <title>Methods | Swing State Election Analysis</title>
+  <title>Methods &amp; Models | Swing State Election Analysis</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  
+
   <!-- Header & Navigation -->
   <header class="header">
     <div class="header-container">
       <div class="logo">
         <div>
           <div class="logo-text">Swing State Analysis</div>
-          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+          <div class="logo-subtext">CSCI 5502 &bull; Data Mining &bull; Spring 2026</div>
         </div>
       </div>
-      
+
       <nav class="nav">
         <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
           <span></span>
@@ -33,41 +33,844 @@
           <li><a href="index.html" class="nav-link">Introduction</a></li>
           <li><a href="team.html" class="nav-link">Team</a></li>
           <li><a href="proposal.html" class="nav-link">Proposal</a></li>
-          <li><a href="eda.html" class="nav-link">Data & EDA</a></li>
+          <li><a href="eda.html" class="nav-link">Data &amp; EDA</a></li>
           <li><a href="methods.html" class="nav-link active">Methods</a></li>
           <li><a href="results.html" class="nav-link disabled">Results</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <h1>Methods & Models</h1>
+      <h1>Methods &amp; Models</h1>
       <p class="hero-subtitle">Milestone 3</p>
-      <p>Data mining techniques, model development, and evaluation metrics.</p>
+      <p>Five models. 250 counties. One question: can demographics predict where elections swing?</p>
     </div>
   </section>
-  
+
   <!-- Main Content -->
   <main>
-    
-    <section class="section">
+
+    <!-- ========== Section 1: At a Glance ========== -->
+    <section class="section section-alt">
       <div class="container">
-        
-        <div class="placeholder-content">
-          <div class="placeholder-icon">⚙️</div>
-          <h2>Coming Soon</h2>
-          <p>This section will be completed in Milestone 3.</p>
-          <span class="milestone-badge">Milestone 3</span>
+        <h2>At a Glance</h2>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Models Tested</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">28</div>
+            <div class="stat-label">Demographic Features</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">County Archetypes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">7.15&times;</div>
+            <div class="stat-label">Diversity Threshold Discovery</div>
+          </div>
         </div>
-        
+
+        <div class="content-block">
+          <p>
+            Our <a href="eda.html">EDA</a> revealed that no single demographic feature explains electoral volatility. So we attacked the problem from two directions: <strong>supervised classification</strong> to predict which quintile of volatility a county falls into, and <strong>unsupervised clustering</strong> to discover natural county archetypes from the data. K-Means (k=5) revealed five distinct demographic profiles&mdash;from aging rural communities to high-diversity urban centers&mdash;that we reference throughout this analysis to ground the models in recognizable county types.
+          </p>
+        </div>
+
+        <!-- Cluster Map + Archetype Key -->
+        <div class="content-block">
+          <figure class="figure-container">
+            <img src="images/methods/unnamed.png" alt="K-Means cluster map of 250 counties across Michigan, Pennsylvania, and North Carolina showing 5 distinct county archetypes" style="max-width: 680px; margin: 0 auto;">
+            <figcaption>K-Means clustering (k=5) reveals five distinct county archetypes across our three swing states. Cluster labels are 1-indexed on the map.</figcaption>
+          </figure>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Archetype</th>
+                <th>Counties</th>
+                <th>Key Traits</th>
+                <th>Avg Volatility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Suburban Middle (Cluster 1)</strong></td>
+                <td>47</td>
+                <td>Mid-size (~241k pop), moderate diversity, avg income $66k</td>
+                <td>Average</td>
+              </tr>
+              <tr>
+                <td><strong>Affluent Exurban (Cluster 2)</strong></td>
+                <td>47</td>
+                <td>High income ($83k), 79% homeownership, low density</td>
+                <td>Low</td>
+              </tr>
+              <tr>
+                <td><strong>High-Poverty Rural (Cluster 3)</strong></td>
+                <td>56</td>
+                <td>35% Black, 21% poverty, small/rural (38k pop)</td>
+                <td style="background: rgba(192, 57, 43, 0.15); font-weight: 700; color: #c0392b;">Highest</td>
+              </tr>
+              <tr>
+                <td><strong>Aging Rural (Cluster 4)</strong></td>
+                <td>115</td>
+                <td>Oldest (median age 47), very homogeneous, &lt;1% foreign-born</td>
+                <td style="background: rgba(26, 138, 92, 0.15); font-weight: 700; color: #1a8a5c;">Lowest</td>
+              </tr>
+              <tr>
+                <td><strong>High-Diversity Urban (Cluster 5)</strong></td>
+                <td>13</td>
+                <td>Largest (748k pop), most diverse, 50% bachelor&rsquo;s+</td>
+                <td>Moderate-High</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
-    
+
+    <!-- ========== Section 2: The Modeling Challenge ========== -->
+    <section class="section">
+      <div class="container">
+        <h2>The Modeling Challenge</h2>
+
+        <div class="content-block">
+          <p>
+            Electoral volatility isn&rsquo;t just about who wins&mdash;it&rsquo;s about <em>how much</em> a county&rsquo;s partisan balance shifts between elections. We engineered a composite volatility score (<code>vol_z_abs_sum</code>) from the absolute z-scored margin swings across 2016&ndash;2020&ndash;2024, then binned all 250 counties into five equal quintiles: from Q1 (Very Stable) to Q5 (Highly Volatile). This gives us a balanced 5-class target with exactly 50 counties per class.
+          </p>
+        </div>
+
+        <figure class="figure-container">
+          <img src="images/methods/choropleth_volatility_class.png" alt="Choropleth map showing volatility class distribution across PA, MI, and NC counties">
+          <figcaption>Geographic distribution of the five volatility quintiles across our study region</figcaption>
+        </figure>
+
+        <div class="content-block">
+          <h3>Two Complementary Lenses</h3>
+          <p>
+            We approached prediction from two angles. <strong>Classification</strong> asks: &ldquo;which volatility bucket does this county belong to?&rdquo;&mdash;useful for campaign triage when you need a quick stable-vs-volatile label. <strong>Regression</strong> (continuous prediction of the raw volatility score) asks &ldquo;exactly how volatile is this county?&rdquo;&mdash;useful for ranking counties within the same class. We found that classification outperformed regression for this task: the discrete quintile structure captures real groupings in the data better than a smooth linear fit, especially after our binary pivot (Section 4). The remainder of this page focuses on the classification track, where the strongest results emerged.
+          </p>
+        </div>
+
+        <!-- Pipeline Flow -->
+        <div class="pipeline-flow">
+          <div class="pipeline-sources">
+            <div class="pipeline-node">
+              28 Standardized Features
+              <span class="node-dim">Demographics, income, housing, commuting</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">&#10132;</div>
+          <div class="pipeline-sources">
+            <div class="pipeline-node">
+              Nested Cross-Validation
+              <span class="node-dim">Outer 5-fold &times; Inner 3-fold</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">&#10132;</div>
+          <div class="pipeline-result">
+            Volatility Predictions
+            <span class="node-dim">5-class &amp; binary classification</span>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <p>
+            All models were evaluated with nested cross-validation&mdash;an outer 5-fold loop for unbiased performance estimation, and an inner 3-fold loop for hyperparameter tuning. This prevents information leakage and gives honest estimates of how each model would perform on truly unseen counties.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 3: The Classification Arena ========== -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>The Classification Arena</h2>
+
+        <div class="content-block">
+          <p>
+            Three classifiers competed on the 5-class volatility prediction task. We started with Random Forest as our baseline, then tested whether gradient boosting (XGBoost) or maximum-margin (SVM) approaches could improve on it. Scroll through to see how each model performed&mdash;or use the interactive comparison below.
+          </p>
+        </div>
+
+        <!-- Progressive Reveal: RF -->
+        <div class="model-card reveal-on-scroll">
+          <h3>
+            <span class="model-badge badge-baseline">Baseline</span>
+            Random Forest
+          </h3>
+          <p>
+            An ensemble of 300 decision trees with balanced class weights. Random Forest handles nonlinear feature interactions naturally and provides built-in feature importance. With an accuracy of <strong>36.8%</strong> and macro F1 of <strong>0.362</strong>, it established our baseline&mdash;significantly above the 20% random-chance threshold for 5 balanced classes, but clearly struggling with the middle quintiles.
+          </p>
+          <p>
+            <strong>Cluster insight:</strong> RF performed best on Q5 (Highly Volatile) counties, which are dominated by High-Poverty Rural (Cluster 3) communities. Their extreme demographic profile makes them the most distinctive signal in the data.
+          </p>
+        </div>
+
+        <!-- Progressive Reveal: XGBoost -->
+        <div class="model-card reveal-on-scroll delay-1">
+          <h3>
+            <span class="model-badge badge-best">Best 5-Class</span>
+            XGBoost
+          </h3>
+          <p>
+            Gradient boosting with 100 randomized hyperparameter configurations. XGBoost earned the highest 5-class accuracy (<strong>38.8%</strong>) and macro F1 (<strong>0.387</strong>)&mdash;a meaningful improvement in a 5-class setting. Its key advantage: better calibration on the middle quintiles (Q3: 0.356 F1 vs. RF&rsquo;s 0.257), suggesting it captures subtler demographic gradients that tree ensembles miss.
+          </p>
+        </div>
+
+        <!-- Progressive Reveal: SVM -->
+        <div class="model-card reveal-on-scroll delay-2">
+          <h3>
+            <span class="model-badge badge-contender">Contender</span>
+            SVM (Linear Kernel)
+          </h3>
+          <p>
+            Support Vector Machine with a linear kernel and balanced class weights. Matched RF&rsquo;s overall accuracy (<strong>36.8%</strong>) but showed a different error pattern: it achieved the strongest Q2 (Stable) performance of any model (F1 = 0.365), suggesting that the hyperplane-based approach finds a linear boundary for &ldquo;low-volatility&rdquo; counties that tree methods struggle with. We also tested an RBF kernel, which traded accuracy (35.2%) for higher ROC-AUC (0.790), indicating better probability calibration despite worse hard predictions.
+          </p>
+        </div>
+
+        <!-- Interactive Tabbed Confusion Matrices -->
+        <div class="content-block">
+          <h3>Confusion Matrix Comparison</h3>
+          <p>Click each tab to compare how the three models distribute their predictions across the five volatility classes. Diagonal cells (correct predictions) are highlighted in green; off-diagonal errors in red shading.</p>
+        </div>
+
+        <div class="model-tabs">
+          <div class="model-tab-nav">
+            <button class="model-tab-btn active" data-tab="rf-tab">Random Forest</button>
+            <button class="model-tab-btn" data-tab="xgb-tab">XGBoost</button>
+            <button class="model-tab-btn" data-tab="svm-tab">SVM (Linear)</button>
+          </div>
+
+          <!-- RF Confusion Matrix -->
+          <div class="model-tab-content active" id="rf-tab">
+            <div class="tab-metrics">
+              <div class="metrics-side">
+                <div class="metric-pill"><span>Accuracy</span> <span class="metric-val">36.8%</span></div>
+                <div class="metric-pill"><span>Macro F1</span> <span class="metric-val">0.362</span></div>
+                <div class="metric-pill"><span>ROC-AUC</span> <span class="metric-val">0.803</span></div>
+                <div class="metric-pill"><span>Best Class</span> <span class="metric-val">Q5</span></div>
+              </div>
+              <div class="matrix-side">
+                <table class="data-table heatmap-table">
+                  <thead>
+                    <tr>
+                      <th>Actual \ Pred</th>
+                      <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="row-label">Q1 Very Stable</td>
+                      <td style="background: rgba(26,138,92,0.50)">25</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(192,57,43,0.10)">4</td>
+                      <td style="background: rgba(192,57,43,0.08)">3</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q2 Stable</td>
+                      <td style="background: rgba(192,57,43,0.38)">17</td>
+                      <td style="background: rgba(26,138,92,0.16)">8</td>
+                      <td style="background: rgba(192,57,43,0.30)">13</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.10)">4</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q3 Moderate</td>
+                      <td style="background: rgba(192,57,43,0.25)">11</td>
+                      <td style="background: rgba(192,57,43,0.35)">15</td>
+                      <td style="background: rgba(26,138,92,0.26)">13</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.08)">3</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q4 Volatile</td>
+                      <td style="background: rgba(192,57,43,0.10)">4</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(26,138,92,0.34)">17</td>
+                      <td style="background: rgba(192,57,43,0.30)">13</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q5 Highly Volatile</td>
+                      <td style="background: rgba(192,57,43,0.05)">2</td>
+                      <td style="background: rgba(192,57,43,0.08)">3</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                      <td style="background: rgba(192,57,43,0.25)">11</td>
+                      <td style="background: rgba(26,138,92,0.58)">29</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- XGBoost Confusion Matrix -->
+          <div class="model-tab-content" id="xgb-tab">
+            <div class="tab-metrics">
+              <div class="metrics-side">
+                <div class="metric-pill"><span>Accuracy</span> <span class="metric-val">38.8%</span></div>
+                <div class="metric-pill"><span>Macro F1</span> <span class="metric-val">0.387</span></div>
+                <div class="metric-pill"><span>ROC-AUC</span> <span class="metric-val">0.783</span></div>
+                <div class="metric-pill"><span>Best Class</span> <span class="metric-val">Q5</span></div>
+              </div>
+              <div class="matrix-side">
+                <table class="data-table heatmap-table">
+                  <thead>
+                    <tr>
+                      <th>Actual \ Pred</th>
+                      <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="row-label">Q1 Very Stable</td>
+                      <td style="background: rgba(26,138,92,0.42)">21</td>
+                      <td style="background: rgba(192,57,43,0.32)">14</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.05)">2</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q2 Stable</td>
+                      <td style="background: rgba(192,57,43,0.32)">14</td>
+                      <td style="background: rgba(26,138,92,0.22)">11</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q3 Moderate</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.32)">14</td>
+                      <td style="background: rgba(26,138,92,0.32)">16</td>
+                      <td style="background: rgba(192,57,43,0.25)">11</td>
+                      <td style="background: rgba(192,57,43,0.08)">3</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q4 Volatile</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(26,138,92,0.38)">19</td>
+                      <td style="background: rgba(192,57,43,0.28)">12</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q5 Highly Volatile</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                      <td style="background: rgba(192,57,43,0.12)">5</td>
+                      <td style="background: rgba(192,57,43,0.08)">3</td>
+                      <td style="background: rgba(192,57,43,0.18)">7</td>
+                      <td style="background: rgba(26,138,92,0.60)">30</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SVM Confusion Matrix -->
+          <div class="model-tab-content" id="svm-tab">
+            <div class="tab-metrics">
+              <div class="metrics-side">
+                <div class="metric-pill"><span>Accuracy</span> <span class="metric-val">36.8%</span></div>
+                <div class="metric-pill"><span>Macro F1</span> <span class="metric-val">0.364</span></div>
+                <div class="metric-pill"><span>ROC-AUC</span> <span class="metric-val">0.765</span></div>
+                <div class="metric-pill"><span>Best Class</span> <span class="metric-val">Q1</span></div>
+              </div>
+              <div class="matrix-side">
+                <table class="data-table heatmap-table">
+                  <thead>
+                    <tr>
+                      <th>Actual \ Pred</th>
+                      <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="row-label">Q1 Very Stable</td>
+                      <td style="background: rgba(26,138,92,0.52)">26</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.05)">2</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q2 Stable</td>
+                      <td style="background: rgba(192,57,43,0.28)">12</td>
+                      <td style="background: rgba(26,138,92,0.38)">19</td>
+                      <td style="background: rgba(192,57,43,0.25)">10</td>
+                      <td style="background: rgba(192,57,43,0.05)">2</td>
+                      <td style="background: rgba(192,57,43,0.18)">7</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q3 Moderate</td>
+                      <td style="background: rgba(192,57,43,0.25)">11</td>
+                      <td style="background: rgba(192,57,43,0.30)">13</td>
+                      <td style="background: rgba(26,138,92,0.18)">9</td>
+                      <td style="background: rgba(192,57,43,0.25)">11</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q4 Volatile</td>
+                      <td style="background: rgba(192,57,43,0.22)">9</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.22)">9</td>
+                      <td style="background: rgba(26,138,92,0.32)">16</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                    </tr>
+                    <tr>
+                      <td class="row-label">Q5 Highly Volatile</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(192,57,43,0.15)">6</td>
+                      <td style="background: rgba(192,57,43,0.20)">8</td>
+                      <td style="background: rgba(26,138,92,0.44)">22</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Scoreboard -->
+        <div class="content-block">
+          <h3>5-Class Model Scoreboard</h3>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table heatmap-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Accuracy</th>
+                <th>Macro F1</th>
+                <th>ROC-AUC</th>
+                <th>Best Per-Class F1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Random Forest</strong></td>
+                <td>0.368</td>
+                <td>0.362</td>
+                <td class="hm-best">0.803</td>
+                <td>Q5: 0.569</td>
+              </tr>
+              <tr>
+                <td><strong>XGBoost</strong></td>
+                <td class="hm-best">0.388</td>
+                <td class="hm-best">0.387</td>
+                <td>0.783</td>
+                <td class="hm-best">Q5: 0.588</td>
+              </tr>
+              <tr>
+                <td><strong>SVM (Linear)</strong></td>
+                <td>0.368</td>
+                <td>0.364</td>
+                <td>0.765</td>
+                <td>Q2: 0.365</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content-block">
+          <p>
+            A clear pattern: all three models excel at the extremes (Q1 and Q5) but struggle with the middle quintiles. The confusion matrices show a &ldquo;smearing&rdquo; effect where Q2&ndash;Q4 counties bleed into adjacent classes. This isn&rsquo;t a model failure&mdash;it reflects genuine demographic overlap between moderate-volatility counties. The extremes are where demographics tell the clearest story.
+          </p>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll">
+          <img src="images/methods/per_class_f1_heatmap.png" alt="Per-class F1 heatmap across all models and quintiles" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>Per-class F1 scores reveal the extremes-vs-middle pattern across all model families</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 4: The Binary Breakthrough ========== -->
+    <section class="section section-blue">
+      <div class="container">
+        <h2>The Binary Breakthrough</h2>
+
+        <div class="content-block">
+          <p>
+            The 5-class struggle pointed to a pragmatic question: does a campaign manager really need to distinguish Q2 from Q3? What matters is identifying <strong>high-volatility targets</strong> (Q4 + Q5) versus <strong>stable counties</strong> (Q1&ndash;Q3). This binary reframing changed everything.
+          </p>
+        </div>
+
+        <!-- F1 Improvement Arrow -->
+        <div class="arrow-stat">
+          <span class="old-val">0.387</span>
+          <span class="arrow">&#10132;</span>
+          <span class="new-val">0.718</span>
+          <span class="arrow-label">Macro F1 improvement: 5-class XGBoost &rarr; Binary Random Forest</span>
+        </div>
+
+        <figure class="figure-container">
+          <img src="images/methods/deepdive_binary_roc_all_models.png" alt="ROC curves comparing all models on binary volatile vs stable classification" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>Binary ROC curves &mdash; Random Forest achieves AUC = 0.828, outperforming all competitors</figcaption>
+        </figure>
+
+        <!-- Binary Scoreboard -->
+        <div class="table-wrapper">
+          <table class="data-table heatmap-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Accuracy</th>
+                <th>F1</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>ROC-AUC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Random Forest</strong></td>
+                <td class="hm-best">0.772</td>
+                <td class="hm-best">0.718</td>
+                <td class="hm-best">0.726</td>
+                <td class="hm-best">0.690</td>
+                <td class="hm-best">0.828</td>
+              </tr>
+              <tr>
+                <td><strong>XGBoost</strong></td>
+                <td>0.748</td>
+                <td>0.660</td>
+                <td>0.718</td>
+                <td>0.610</td>
+                <td>0.814</td>
+              </tr>
+              <tr>
+                <td><strong>SVM (RBF)</strong></td>
+                <td>0.756</td>
+                <td>0.674</td>
+                <td>0.724</td>
+                <td>0.630</td>
+                <td>0.789</td>
+              </tr>
+              <tr>
+                <td><strong>Logistic Regression</strong></td>
+                <td>0.680</td>
+                <td>0.604</td>
+                <td>0.598</td>
+                <td>0.610</td>
+                <td>0.745</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Cluster Insight</span>
+            <h4>Aging Rural (Cluster 4) = Predictably Stable</h4>
+            <p>
+              These 115 homogeneous, older counties were almost perfectly classified as low-volatility. Their demographics tell a consistent story: minimal diversity, high homeownership, strong partisan anchoring.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Cluster Insight</span>
+            <h4>High-Poverty Rural (Cluster 3) = Volatile Signal</h4>
+            <p>
+              With an average volatility quintile of 4.6 out of 5, these 56 counties were the clearest &ldquo;volatile&rdquo; signal in the binary task. High poverty + high diversity = unpredictable elections.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 5: The Misfit Detector ========== -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>The Misfit Detector</h2>
+
+        <div class="content-block">
+          <p>
+            Here&rsquo;s a creative twist on logistic regression. Instead of predicting volatility, we trained a model to predict <strong>partisan lean</strong> from demographics alone. The insight: counties where the model confidently predicts &ldquo;blue&rdquo; but voters choose &ldquo;red&rdquo; (or vice versa) represent <em>demographic misfits</em>&mdash;places where the electorate defies its demographic destiny. We hypothesized that this tension would correlate with volatility. It does.
+          </p>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll">
+          <img src="images/methods/misfit_scatter.png" alt="Scatter plot of demographic misfit scores vs volatility scores showing positive correlation">
+          <figcaption>The misfit scatter &mdash; counties that defy their demographic predictions tend to be more volatile</figcaption>
+        </figure>
+
+        <figure class="figure-container reveal-on-scroll delay-1">
+          <img src="images/methods/choropleth_misfit_score.png" alt="Choropleth map of misfit scores across PA, MI, and NC">
+          <figcaption>Geographic distribution of demographic misfits &mdash; note the concentration in transitional suburban belts</figcaption>
+        </figure>
+
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Key Finding</span>
+            <h4>&ldquo;Surprise Dem&rdquo; Misfits</h4>
+            <p>
+              Counties whose demographics say &ldquo;Republican&rdquo; but that vote Democratic tend to be university towns and resort communities with unique electorates&mdash;places like Marquette County, MI and Centre County, PA.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Key Finding</span>
+            <h4>&ldquo;Surprise Rep&rdquo; Misfits</h4>
+            <p>
+              Southern counties with mixed demographic profiles that nonetheless lean Republican. The demographic tension in these communities maps directly to higher electoral volatility.
+            </p>
+          </div>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll delay-2">
+          <img src="images/methods/deepdive_misfit_by_volatility.png" alt="Misfit scores broken down by volatility class showing increasing misfit with volatility" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>Misfit scores rise consistently with volatility class &mdash; demographic tension predicts electoral instability</figcaption>
+        </figure>
+
+        <div class="content-block">
+          <p>
+            The misfit detector gives us something no standard classifier can: a measure of <em>how surprising</em> a county&rsquo;s voting behavior is given its demographics. Counties with high misfit scores are exactly the places where campaigns should pay closest attention&mdash;they&rsquo;re the ones most likely to flip.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 6: Cross-State Strategic Insight ========== -->
+    <section class="section">
+      <div class="container">
+        <h2>Cross-State Strategic Insight</h2>
+
+        <div class="content-block">
+          <p>
+            A natural question: can a model trained on Pennsylvania and Michigan predict volatility in North Carolina? We tested this with Leave-One-State-Out (LOSO) cross-validation, where each state is held out in turn. The answer was revealing&mdash;not because the models worked, but because of <em>how</em> they failed.
+          </p>
+        </div>
+
+        <figure class="figure-container">
+          <img src="images/methods/loso_confusion_matrices.png" alt="Three confusion matrices from LOSO cross-validation showing poor cross-state generalization">
+          <figcaption>LOSO confusion matrices &mdash; models trained on two states fail to predict the third</figcaption>
+        </figure>
+
+        <!-- LOSO Performance Table -->
+        <div class="table-wrapper">
+          <table class="data-table heatmap-table">
+            <thead>
+              <tr>
+                <th>Held-Out State</th>
+                <th>Counties</th>
+                <th>5-Class F1</th>
+                <th>Binary F1</th>
+                <th>Binary AUC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pennsylvania</strong></td>
+                <td>67</td>
+                <td>0.189</td>
+                <td>0.591</td>
+                <td>0.838</td>
+              </tr>
+              <tr>
+                <td><strong>Michigan</strong></td>
+                <td>83</td>
+                <td>0.182</td>
+                <td>0.636</td>
+                <td>0.778</td>
+              </tr>
+              <tr>
+                <td><strong>North Carolina</strong></td>
+                <td>100</td>
+                <td>0.213</td>
+                <td class="hm-best">0.736</td>
+                <td class="hm-best">0.829</td>
+              </tr>
+              <tr>
+                <td><strong>Full Dataset (Pooled)</strong></td>
+                <td>250</td>
+                <td class="hm-best">0.387</td>
+                <td class="hm-best">0.718</td>
+                <td class="hm-best">0.828</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content-block">
+          <p>
+            The performance gap tells the story: pooled 5-class F1 of 0.387 drops to an average of just 0.195 under LOSO. But this isn&rsquo;t a failure&mdash;it&rsquo;s a discovery. Each state&rsquo;s volatility is driven by a <strong>unique demographic fingerprint</strong>.
+          </p>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll">
+          <img src="images/methods/deepdive_state_feature_importance.png" alt="State-specific feature importance showing different top predictors per state" style="max-width: 750px; margin: 0 auto;">
+          <figcaption>Each state has its own volatility fingerprint &mdash; one-size-fits-all models miss this</figcaption>
+        </figure>
+
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Pennsylvania</span>
+            <h4>Diversity-Driven Volatility</h4>
+            <p>
+              Racial entropy is the dominant predictor. PA&rsquo;s volatile counties sit along the suburban diversity frontier between homogeneous rural areas and multicultural cities.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Michigan</span>
+            <h4>Education-Driven Volatility</h4>
+            <p>
+              Bachelor&rsquo;s degree attainment is Michigan&rsquo;s key signal. The college-educated suburban swing &mdash; especially around Detroit and Grand Rapids &mdash; defines MI volatility.
+            </p>
+          </div>
+        </div>
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">North Carolina</span>
+            <h4>Poverty-Driven Volatility</h4>
+            <p>
+              Economic distress dominates. NC&rsquo;s most volatile counties are the High-Poverty Rural (Cluster 3) communities concentrated in the eastern part of the state.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Strategic Implication</span>
+            <h4>State-Specific Models Win</h4>
+            <p>
+              A one-size-fits-all model misses the point. The path to better predictions&mdash;and smarter campaign strategy&mdash;runs through state-specific models that respect each state&rsquo;s unique drivers.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 7: The Diversity Threshold ========== -->
+    <section class="section section-blue">
+      <div class="container">
+        <h2>The Diversity Threshold</h2>
+
+        <div class="content-block">
+          <p>
+            SHAP (SHapley Additive exPlanations) analysis peeled back the black box of our XGBoost model to reveal which features matter most&mdash;and one result stopped us in our tracks. The normalized racial entropy index, introduced on our <a href="eda.html">EDA page</a> as Shannon Entropy, emerged as the single most important predictor of electoral volatility.
+          </p>
+        </div>
+
+        <figure class="figure-container">
+          <img src="images/methods/xgb_shap_summary.png" alt="SHAP summary plot for XGBoost showing feature importance with race_entropy_norm at top" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>SHAP summary plot &mdash; each dot is one county, with color indicating feature value (red = high, blue = low)</figcaption>
+        </figure>
+
+        <div class="metric-highlight-row">
+          <div class="metric-highlight">
+            <div class="big-number">0.552</div>
+            <div class="big-label">Shannon Entropy Threshold</div>
+          </div>
+          <div class="metric-highlight">
+            <div class="big-number">7.15&times;</div>
+            <div class="big-label">Odds Ratio Above Threshold</div>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <p>
+            At a normalized entropy of 0.552, the relationship between racial diversity and volatility undergoes a phase transition. Counties above this threshold are <strong>7.15 times more likely</strong> to be classified as high-volatility. This isn&rsquo;t a gradual increase&mdash;it&rsquo;s a sharp break. Below 0.552, diversity barely matters. Above it, it becomes the dominant predictor.
+          </p>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll">
+          <img src="images/methods/deepdive2_diversity_threshold.png" alt="Visualization of the diversity threshold at 0.552 showing sharp volatility increase" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>The diversity threshold at 0.552 &mdash; above this line, counties are 7.15&times; more likely to be volatile</figcaption>
+        </figure>
+
+        <figure class="figure-container reveal-on-scroll delay-1">
+          <img src="images/methods/xgb_shap_dependence_top5.png" alt="SHAP dependence plots for top 5 features showing nonlinear effects">
+          <figcaption>SHAP dependence plots reveal nonlinear relationships &mdash; note the sharp inflection in race_entropy_norm</figcaption>
+        </figure>
+
+        <div class="content-block">
+          <h3>Diversity Meets Poverty</h3>
+          <p>
+            The threshold effect intensifies when diversity intersects with economic distress. High-diversity <em>and</em> high-poverty counties&mdash;dominated by the High-Poverty Rural (Cluster 3) archetype&mdash;show the strongest volatility signal in the entire dataset.
+          </p>
+        </div>
+
+        <figure class="figure-container reveal-on-scroll delay-2">
+          <img src="images/methods/deepdive_diversity_poverty_interaction.png" alt="Interaction plot showing diversity x poverty amplifying volatility" style="max-width: 700px; margin: 0 auto;">
+          <figcaption>The diversity&ndash;poverty interaction &mdash; when both are high, volatility explodes</figcaption>
+        </figure>
+
+        <div class="callout-grid">
+          <div class="callout-card">
+            <span class="callout-tag">Hypothesis Confirmed</span>
+            <h4>Composite Index &gt; Individual Demographics</h4>
+            <p>
+              Our proposal hypothesized that a composite Racial Diversity Index would outperform any single demographic variable. SHAP confirms it: <code>race_entropy_norm</code> has higher feature importance than <code>pct_black</code>, <code>pct_hispanic</code>, or any other individual race variable.
+            </p>
+          </div>
+          <div class="callout-card">
+            <span class="callout-tag">Top Interactions</span>
+            <h4>Feature Combinations That Matter</h4>
+            <p>
+              The three strongest SHAP interactions: (1) racial entropy &times; population density, (2) bachelor&rsquo;s degree % &times; racial entropy, and (3) total population &times; population density. Diversity is in two of the top three.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== Section 8: Coming Next ========== -->
+    <section class="section-dark">
+      <div class="container" style="text-align: center;">
+        <h2 style="display: block; border-bottom: none;">Coming Next: Results</h2>
+        <p style="max-width: 650px; margin: 0 auto var(--spacing-xl);">
+          Our methods revealed five county archetypes, a 7.15&times; diversity threshold, and state-specific volatility fingerprints. But what does this mean for real-world strategy? The Results page will answer our original research questions with data.
+        </p>
+
+        <div class="preview-grid">
+          <div class="preview-card reveal-on-scroll">
+            <div class="preview-icon">&#127919;</div>
+            <h4>Priority County Rankings</h4>
+            <p>Which of the 250 counties should campaigns target first for maximum impact?</p>
+            <span class="preview-badge">Research Question 1</span>
+          </div>
+          <div class="preview-card reveal-on-scroll delay-1">
+            <div class="preview-icon">&#128269;</div>
+            <h4>Hypothesis Testing</h4>
+            <p>Do wealth, diversity, and amplification hypotheses hold up against the full evidence?</p>
+            <span class="preview-badge">Hypotheses 1&ndash;3</span>
+          </div>
+          <div class="preview-card reveal-on-scroll delay-2">
+            <div class="preview-icon">&#127463;&#127486;</div>
+            <h4>State-by-State Strategy</h4>
+            <p>Tailored recommendations for PA, MI, and NC based on each state&rsquo;s unique volatility drivers.</p>
+            <span class="preview-badge">Research Questions 7&ndash;8</span>
+          </div>
+          <div class="preview-card reveal-on-scroll delay-3">
+            <div class="preview-icon">&#128200;</div>
+            <h4>Temporal Consistency</h4>
+            <p>Does the swing map shift between 2016, 2020, and 2024&mdash;or do the same counties keep swinging?</p>
+            <span class="preview-badge">Research Question 8</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
-  
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
@@ -82,7 +885,7 @@
       </div>
     </div>
   </footer>
-  
+
   <script src="js/main.js"></script>
 </body>
 </html>

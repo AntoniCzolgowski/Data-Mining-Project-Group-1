@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+from sklearn.metrics import silhouette_score, davies_bouldin_score
 
 # load fips and county names
 df = pd.read_csv(
@@ -46,12 +46,14 @@ for k in range(2, 11):
     rows.append({
         "k": k,
         "silhouette": silhouette_score(cleaned_df, labels),
+        "davies_bouldin": davies_bouldin_score(cleaned_df, labels),
         "min_cluster_size": cluster_counts.min(),
         "max_cluster_size": cluster_counts.max()
     })
 
 results = pd.DataFrame(rows)
 print(results)
+results.to_csv("data/processed/kmeans_k_comparison.csv", index=False)
 
 # decided model
 final_k = 5
@@ -99,7 +101,7 @@ map_cols = {
 }
 
 raw_cols = [map_cols[f] for f in map_cols if map_cols[f] in master_2024.columns]
-summary_df = df[["county_fips", "kmeans_cluster_label", "vol_quintile_num", "vol_z_abs_sum"]].merge(
+summary_df = df[["county_fips", "kmeans_cluster_label", "vol_quintile_num", "vol_z_abs_sum", "race_entropy_norm"]].merge(
     master_2024[["county_fips"] + raw_cols], on="county_fips", how="left"
 )
 cluster_summary = summary_df.drop(columns=["county_fips"]).select_dtypes(include="number").groupby("kmeans_cluster_label").mean().reset_index()

@@ -115,6 +115,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  // ---------- Model Tab Switching (Methods Page) ----------
+  const tabBtns = document.querySelectorAll('.model-tab-btn');
+  if (tabBtns.length) {
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-tab');
+
+        // Deactivate all tabs and panels
+        tabBtns.forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.model-tab-content').forEach(panel => {
+          panel.classList.remove('active');
+        });
+
+        // Activate clicked tab and its panel
+        this.classList.add('active');
+        const target = document.getElementById(targetId);
+        if (target) target.classList.add('active');
+      });
+    });
+  }
+
+  // ---------- Scroll Reveal Animations (Methods Page) ----------
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // Also observe model cards (slide-in animation)
+  document.querySelectorAll('.reveal-on-scroll-card').forEach(el => {
+    revealObserver.observe(el);
+  });
+
   // ---------- Console Welcome Message ----------
   console.log('%c🎓 CU Boulder Data Mining Project', 'font-size: 16px; font-weight: bold; color: #CFB87C;');
   console.log('%cGroup 1: Sam Goodell, Will Creager, Antoni Czolgowski', 'font-size: 12px; color: #565A5C;');

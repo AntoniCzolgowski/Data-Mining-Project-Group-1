@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   navLinks.forEach(link => {
     link.classList.remove('active');
+    link.classList.remove('disabled');
     const href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-      link.classList.remove('disabled');
       link.classList.add('active');
     }
   });

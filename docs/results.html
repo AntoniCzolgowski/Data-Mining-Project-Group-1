@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Results & Conclusion - Data Mining Project - CU Boulder CSCI 5502">
+  <meta name="description" content="Results and conclusion for the Swing State Election Analysis project, centered on the final PersuasionScore deliverable.">
   <meta name="authors" content="Sam Goodell, Will Creager, Antoni Czolgowski">
   <title>Results | Swing State Election Analysis</title>
   <link rel="stylesheet" href="css/styles.css">
@@ -12,17 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  
+
   <!-- Header & Navigation -->
   <header class="header">
     <div class="header-container">
       <div class="logo">
         <div>
           <div class="logo-text">Swing State Analysis</div>
-          <div class="logo-subtext">CSCI 5502 • Data Mining • Spring 2026</div>
+          <div class="logo-subtext">CSCI 5502 &bull; Data Mining &bull; Spring 2026</div>
         </div>
       </div>
-      
+
       <nav class="nav">
         <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
           <span></span>
@@ -33,56 +33,894 @@
           <li><a href="index.html" class="nav-link">Introduction</a></li>
           <li><a href="team.html" class="nav-link">Team</a></li>
           <li><a href="proposal.html" class="nav-link">Proposal</a></li>
-          <li><a href="eda.html" class="nav-link">Data & EDA</a></li>
+          <li><a href="eda.html" class="nav-link">Data &amp; EDA</a></li>
           <li><a href="methods.html" class="nav-link">Methods</a></li>
           <li><a href="results.html" class="nav-link active">Results</a></li>
         </ul>
       </nav>
     </div>
   </header>
-  
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <h1>Results & Conclusion</h1>
-      <p class="hero-subtitle">Milestone 4</p>
-      <p>Key findings, insights, and final project deliverables.</p>
+      <h1>Results &amp; Conclusion</h1>
+      <p class="hero-subtitle">Milestone 4 &middot; Final Deliverable</p>
+      <p>
+        County persuasion opportunities are real, but they are state-specific. Our final PersuasionScore turns that
+        insight into a county-by-county targeting guide for Pennsylvania, Michigan, and North Carolina.
+      </p>
     </div>
   </section>
-  
+
   <!-- Main Content -->
   <main>
-    
-    <section class="section">
+
+    <section class="section section-alt">
       <div class="container">
-        
-        <div class="placeholder-content">
-          <div class="placeholder-icon">🏆</div>
-          <h2>Coming Soon</h2>
-          <p>This section will be completed in Milestone 4.</p>
-          <span class="milestone-badge">Milestone 4</span>
+        <div class="results-stat-grid reveal-on-scroll">
+          <div class="results-stat-card">
+            <div class="results-stat-number">250</div>
+            <div class="results-stat-label">Counties analyzed</div>
+          </div>
+          <div class="results-stat-card">
+            <div class="results-stat-number">3</div>
+            <div class="results-stat-label">Swing states studied</div>
+          </div>
+          <div class="results-stat-card">
+            <div class="results-stat-number">0.718</div>
+            <div class="results-stat-label">Best binary F1 (RF)</div>
+          </div>
+          <div class="results-stat-card">
+            <div class="results-stat-number">0.195</div>
+            <div class="results-stat-label">LOSO F1 across states</div>
+          </div>
+          <div class="results-stat-card">
+            <div class="results-stat-number">0.552</div>
+            <div class="results-stat-label">Diversity threshold</div>
+          </div>
         </div>
-        
+
+        <div class="results-intro reveal-on-scroll delay-1">
+          <h2>Plain-English Conclusion</h2>
+          <p>
+            The main takeaway is simple: campaigns should not treat battleground counties as interchangeable. A county
+            profile that signals volatility in Pennsylvania does not necessarily behave the same way in Michigan or
+            North Carolina, which is why pooled cross-state prediction breaks down so quickly.
+          </p>
+          <p>
+            Inside each state, though, a clear pattern emerges. Counties that are racially mixed, changing quickly,
+            and often under economic stress are much more likely to move, which makes a state-specific persuasion
+            ranking more useful than a single national template.
+          </p>
+          <p>
+            That is the role of the final <strong>PersuasionScore</strong>: it combines who looks persuadable, how much
+            vote volume is at stake, and how likely the county is to behave like a swing county again.
+          </p>
+        </div>
+
+        <figure class="figure-container results-figure reveal-on-scroll delay-2">
+          <img src="images/methods/deepdive2_grand_synthesis.png" alt="Grand synthesis figure summarizing the diversity effect, state-specific signatures, model performance, trajectories, archetypes, and campaign targets." loading="lazy">
+          <figcaption>
+            One-figure summary: across classification, regression, clustering, and temporal analysis, the same story
+            keeps returning: volatility is real, state-specific, and strategically actionable.
+          </figcaption>
+        </figure>
       </div>
     </section>
-    
+
+    <section class="section section-blue">
+      <div class="container">
+        <h2>Why It Matters</h2>
+        <div class="impact-grid">
+          <article class="impact-card reveal-on-scroll">
+            <h3>Campaign Strategy</h3>
+            <p>
+              The project replaces blanket battleground spending with a county-level targeting logic. Instead of asking
+              which state matters, it asks where the next marginal dollar is most likely to move votes.
+            </p>
+          </article>
+          <article class="impact-card reveal-on-scroll delay-1">
+            <h3>Civic &amp; Media Value</h3>
+            <p>
+              The results also help explain why some counties deserve far more attention than others. They give a more
+              nuanced map of competitive geography than statewide polling or winner-take-all narratives alone.
+            </p>
+          </article>
+          <article class="impact-card reveal-on-scroll delay-2">
+            <h3>Why Further Funding Helps</h3>
+            <p>
+              The framework is already useful at county level, but it gets stronger with more states, better turnout
+              data, voter-file enrichment, and repeated recalibration for future election cycles.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Research Question Explorer</h2>
+        <p class="results-section-intro">
+          Click any item below to see how the different model families answered the project&rsquo;s original research
+          questions and hypotheses.
+        </p>
+
+        <ol class="questions-list results-questions">
+          <li class="question-item question-accordion-item expanded" data-question-label="Q1">
+            <button class="question-toggle" type="button" id="rq1-toggle" aria-expanded="true" aria-controls="rq1-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Results Application</span>
+                <span class="question-text">Which counties best combine electoral elasticity and practical impact for Democratic resource allocation?</span>
+              </span>
+              <span class="answer-status status-answered">Answered</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details expanded" id="rq1-details" role="region" aria-labelledby="rq1-toggle">
+              <p class="question-summary">
+                Our final answer is the <strong>PersuasionScore</strong>, not the earlier ranking variants. It combines
+                persuadability, within-state electoral weight, and predicted volatility to rank counties inside each
+                state. The storytelling spotlight starts with Philadelphia County, Oakland County, and Wake County, but
+                the official rankings remain state-specific because the score is normalized within state.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Classification</span>
+                <span class="evidence-chip">Clustering</span>
+                <span class="evidence-chip">Final composite score</span>
+              </div>
+              <div class="spotlight-grid">
+                <article class="spotlight-card">
+                  <span class="spotlight-state">Pennsylvania leader</span>
+                  <h4>Philadelphia County</h4>
+                  <div class="spotlight-score">PS = 0.871</div>
+                  <p>Large urban persuasion/turnout hybrid target with meaningful predicted volatility.</p>
+                </article>
+                <article class="spotlight-card">
+                  <span class="spotlight-state">Michigan leader</span>
+                  <h4>Oakland County</h4>
+                  <div class="spotlight-score">PS = 0.854</div>
+                  <p>High-volume suburban transition county with one of the strongest volatility signals in the state.</p>
+                </article>
+                <article class="spotlight-card">
+                  <span class="spotlight-state">North Carolina leader</span>
+                  <h4>Wake County</h4>
+                  <div class="spotlight-score">PS = 0.821</div>
+                  <p>High-volume metro target where even small persuasion or turnout gains scale into large vote totals.</p>
+                </article>
+              </div>
+              <figure class="figure-container results-figure">
+                <img src="images/methods/enhanced_persuasion_top5_highlight.png" alt="Three-state map highlighting the top five PersuasionScore counties in each state." loading="lazy">
+                <figcaption>
+                  PersuasionScore spotlight: the most strategically attractive counties are different in each state, even
+                  when they share similar battleground labels.
+                </figcaption>
+              </figure>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="Q2">
+            <button class="question-toggle" type="button" id="rq2-toggle" aria-expanded="false" aria-controls="rq2-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Results Application</span>
+                <span class="question-text">Which counties were most volatile from 2016 to 2024?</span>
+              </span>
+              <span class="answer-status status-answered">Answered</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq2-details" role="region" aria-labelledby="rq2-toggle">
+              <p class="question-summary">
+                Raw volatility highlights where margins moved the most, not necessarily where the next campaign dollar is
+                most efficient. North Carolina dominates the extreme top of the volatility scale, while Pennsylvania and
+                Michigan contribute fewer but still important high-swing counties. Once vote volume enters the picture,
+                high-impact counties like Wayne, Philadelphia, Oakland, Chester, Montgomery, and Bucks matter much more
+                than a raw-volatility list alone would suggest.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Temporal analysis</span>
+                <span class="evidence-chip">Volatility engineering</span>
+                <span class="evidence-chip">Election returns</span>
+              </div>
+              <div class="state-mini-grid">
+                <article class="state-mini-card">
+                  <h4>Pennsylvania</h4>
+                  <table class="results-mini-table">
+                    <thead>
+                      <tr>
+                        <th>County</th>
+                        <th>Vol.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Monroe</td><td>3.41</td></tr>
+                      <tr><td>Pike</td><td>2.94</td></tr>
+                      <tr><td>Lackawanna</td><td>2.32</td></tr>
+                    </tbody>
+                  </table>
+                </article>
+                <article class="state-mini-card">
+                  <h4>Michigan</h4>
+                  <table class="results-mini-table">
+                    <thead>
+                      <tr>
+                        <th>County</th>
+                        <th>Vol.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Wayne</td><td>2.39</td></tr>
+                      <tr><td>Leelanau</td><td>2.26</td></tr>
+                      <tr><td>Grand Traverse</td><td>2.10</td></tr>
+                    </tbody>
+                  </table>
+                </article>
+                <article class="state-mini-card">
+                  <h4>North Carolina</h4>
+                  <table class="results-mini-table">
+                    <thead>
+                      <tr>
+                        <th>County</th>
+                        <th>Vol.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Robeson</td><td>8.03</td></tr>
+                      <tr><td>Anson</td><td>4.46</td></tr>
+                      <tr><td>Scotland</td><td>4.00</td></tr>
+                    </tbody>
+                  </table>
+                </article>
+              </div>
+              <div class="results-note">
+                <strong>High-impact reminder:</strong> the counties with the largest raw swings are not always the same
+                counties that matter most strategically. Wayne County and Philadelphia County are the clearest examples
+                of volatility becoming much more consequential once vote volume is considered.
+              </div>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="Q3">
+            <button class="question-toggle" type="button" id="rq3-toggle" aria-expanded="false" aria-controls="rq3-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Results Application</span>
+                <span class="question-text">What features distinguish high-volatility county clusters from stable clusters?</span>
+              </span>
+              <span class="answer-status status-answered">Answered</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq3-details" role="region" aria-labelledby="rq3-toggle">
+              <p class="question-summary">
+                The cluster story is not random noise. The clearest unstable archetype is a poor, racially diverse rural
+                profile concentrated in North Carolina, while affluent exurban and aging rural counties look
+                substantially more stable. SHAP-based archetypes reinforce the same conclusion from a different angle:
+                volatility comes from a small number of recognizable county types, not one universal statewide recipe.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">K-means clustering</span>
+                <span class="evidence-chip">SHAP archetypes</span>
+                <span class="evidence-chip">Classification</span>
+              </div>
+              <div class="archetype-grid">
+                <article class="archetype-card">
+                  <h4>High-Poverty Rural</h4>
+                  <p>NC-only concentration, about 21% poverty, small rural population, and the highest average volatility.</p>
+                </article>
+                <article class="archetype-card">
+                  <h4>High-Diversity Urban</h4>
+                  <p>The largest and most educated cluster; volatility is not always extreme, but it stays meaningfully elevated.</p>
+                </article>
+                <article class="archetype-card">
+                  <h4>Affluent Exurban</h4>
+                  <p>High income, high homeownership, lower volatility, and fewer signs of rapid political movement.</p>
+                </article>
+                <article class="archetype-card">
+                  <h4>Aging Rural</h4>
+                  <p>Older, more homogeneous counties with the lowest average volatility and the most stable voting patterns.</p>
+                </article>
+              </div>
+              <figure class="figure-container results-figure">
+                <img src="images/methods/deepdive2_shap_archetypes.png" alt="SHAP-based county archetypes figure with PCA clustering and state composition." loading="lazy">
+                <figcaption>
+                  Model-explanation clustering reveals five functional county archetypes and shows why the North Carolina
+                  poor-and-diverse pattern does not transfer neatly to other states.
+                </figcaption>
+              </figure>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="H1">
+            <button class="question-toggle" type="button" id="rq4-toggle" aria-expanded="false" aria-controls="rq4-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Hypothesis</span>
+                <span class="question-text">Is electoral volatility inversely related to wealth?</span>
+              </span>
+              <span class="answer-status status-supported">Supported</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq4-details" role="region" aria-labelledby="rq4-toggle">
+              <p class="question-summary">
+                This hypothesis is supported overall, but with clear state nuance. Lower-income and housing-pressure
+                features repeatedly appear among top predictors, while poverty is especially decisive in North Carolina.
+                The broader lesson is that economic stress matters, but the pathway differs by state: poverty dominates
+                in North Carolina, rent pressure matters heavily in Pennsylvania, and Michigan is more education-driven.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Regression</span>
+                <span class="evidence-chip">Classification</span>
+                <span class="evidence-chip">Cross-method convergence</span>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table results-evidence-table">
+                  <thead>
+                    <tr>
+                      <th>State</th>
+                      <th>Best Regression R<sup>2</sup></th>
+                      <th>What the model says</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Pennsylvania</td>
+                      <td>0.674</td>
+                      <td>Rent, unemployment, and diversity matter most in the strongest state model.</td>
+                    </tr>
+                    <tr>
+                      <td>Michigan</td>
+                      <td>0.331</td>
+                      <td>Education and transition features matter more than pure income measures.</td>
+                    </tr>
+                    <tr>
+                      <td>North Carolina</td>
+                      <td>0.435</td>
+                      <td>Poverty is the clearest statewide volatility signal.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="H2">
+            <button class="question-toggle" type="button" id="rq5-toggle" aria-expanded="false" aria-controls="rq5-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Hypothesis</span>
+                <span class="question-text">Does the diversity index outperform any single race-share variable?</span>
+              </span>
+              <span class="answer-status status-supported">Supported</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq5-details" role="region" aria-labelledby="rq5-toggle">
+              <p class="question-summary">
+                Yes, and this is the strongest single result in the project. The normalized racial diversity measure
+                <code>race_entropy_norm</code> repeatedly outruns individual race-share variables in permutation
+                importance, SHAP analysis, threshold analysis, and interaction analysis. Crossing the 0.552 threshold
+                makes a county about 7.15 times more likely to be highly volatile, especially when diversity and poverty
+                appear together.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">SHAP</span>
+                <span class="evidence-chip">Threshold analysis</span>
+                <span class="evidence-chip evidence-chip-highlight">Strongest finding</span>
+              </div>
+              <figure class="figure-container results-figure">
+                <img src="images/methods/deepdive2_diversity_threshold.png" alt="Diversity threshold figure showing a sharp increase in predicted volatility above race entropy 0.552." loading="lazy">
+                <figcaption>
+                  The diversity switch: above <code>race_entropy_norm = 0.552</code>, counties become far more likely to
+                  land in the high-volatility bucket.
+                </figcaption>
+              </figure>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="H3">
+            <button class="question-toggle" type="button" id="rq6-toggle" aria-expanded="false" aria-controls="rq6-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Hypothesis</span>
+                <span class="question-text">Are high-volatility counties macro-trend amplifiers rather than isolated outliers?</span>
+              </span>
+              <span class="answer-status status-mostly-supported">Mostly Supported</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq6-details" role="region" aria-labelledby="rq6-toggle">
+              <p class="question-summary">
+                The temporal evidence points in that direction. Volatile counties usually move with broader statewide or
+                national direction rather than inventing a completely separate path: Blue Bounceback is common, Steady
+                Red Drift is the most volatile, and true red-to-blue bouncebacks are extremely rare. That makes these
+                places look more like amplifiers of larger trends than isolated anomalies, although this remains an
+                interpretation built from trajectory evidence rather than a standalone formal test.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Temporal analysis</span>
+                <span class="evidence-chip">Trajectory typing</span>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table results-evidence-table">
+                  <thead>
+                    <tr>
+                      <th>Trajectory type</th>
+                      <th>Counties</th>
+                      <th>% High volatility</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Blue Bounceback</td>
+                      <td>117</td>
+                      <td>34%</td>
+                    </tr>
+                    <tr>
+                      <td>Steady Red Drift</td>
+                      <td>94</td>
+                      <td>50%</td>
+                    </tr>
+                    <tr>
+                      <td>Steady Blue Drift</td>
+                      <td>35</td>
+                      <td>37%</td>
+                    </tr>
+                    <tr>
+                      <td>Red Bounceback</td>
+                      <td>4</td>
+                      <td>0%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="RQ7">
+            <button class="question-toggle" type="button" id="rq7-toggle" aria-expanded="false" aria-controls="rq7-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Further Context</span>
+                <span class="question-text">Do demographic predictors of volatility generalize across states?</span>
+              </span>
+              <span class="answer-status status-answered">Answered</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq7-details" role="region" aria-labelledby="rq7-toggle">
+              <p class="question-summary">
+                No. Leave-One-State-Out validation collapses to near-random performance, which means a model trained on
+                two states struggles to predict the third. Pennsylvania behaves like a diversity-and-rent story,
+                Michigan looks more like an education-and-transition story, and North Carolina is much more
+                poverty-driven.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">LOSO validation</span>
+                <span class="evidence-chip">Regression</span>
+                <span class="evidence-chip">State signatures</span>
+              </div>
+              <figure class="figure-container results-figure">
+                <img src="images/methods/loso_confusion_matrices.png" alt="LOSO confusion matrices showing weak cross-state prediction." loading="lazy">
+                <figcaption>
+                  Cross-state failure is substantive, not cosmetic: pooled models do not carry cleanly from one swing
+                  state to another.
+                </figcaption>
+              </figure>
+              <div class="signature-grid">
+                <article class="signature-card">
+                  <h4>Pennsylvania</h4>
+                  <p>Diversity and housing pressure matter most.</p>
+                </article>
+                <article class="signature-card">
+                  <h4>Michigan</h4>
+                  <p>Education and transition features dominate.</p>
+                </article>
+                <article class="signature-card">
+                  <h4>North Carolina</h4>
+                  <p>Poverty-driven volatility is the clearest pattern.</p>
+                </article>
+              </div>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="RQ8">
+            <button class="question-toggle" type="button" id="rq8-toggle" aria-expanded="false" aria-controls="rq8-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Further Context</span>
+                <span class="question-text">Is the swing map temporally consistent across 2016, 2020, and 2024?</span>
+              </span>
+              <span class="answer-status status-answered">Answered</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq8-details" role="region" aria-labelledby="rq8-toggle">
+              <p class="question-summary">
+                The swing map has some continuity, but it is not just the same counties repeating the same move. The most
+                common pattern is Blue Bounceback, where counties swung toward Democrats in 2020 and snapped back in
+                2024. The most volatile pattern is Steady Red Drift, and North Carolina stands out because nearly half of
+                its counties follow that path.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Temporal analysis</span>
+                <span class="evidence-chip">Election trajectories</span>
+              </div>
+              <figure class="figure-container results-figure">
+                <img src="images/methods/deepdive2_margin_trajectories.png" alt="Election margin trajectories for Pennsylvania, Michigan, and North Carolina across 2016, 2020, and 2024." loading="lazy">
+                <figcaption>
+                  County trajectories show that 2020 often behaved like a temporary Democratic surge, especially outside
+                  the most stable urban strongholds.
+                </figcaption>
+              </figure>
+            </div>
+          </li>
+
+          <li class="question-item question-accordion-item" data-question-label="RQ9">
+            <button class="question-toggle" type="button" id="rq9-toggle" aria-expanded="false" aria-controls="rq9-details">
+              <span class="question-title-wrap">
+                <span class="question-meta">Further Context</span>
+                <span class="question-text">What is the correlation between turnout variance and vote-share volatility?</span>
+              </span>
+              <span class="answer-status status-future-work">Future Work</span>
+              <span class="question-chevron" aria-hidden="true">&#8250;</span>
+            </button>
+            <div class="question-details" id="rq9-details" role="region" aria-labelledby="rq9-toggle">
+              <p class="question-summary">
+                This question was not fully completed in the official milestone pipeline. We tracked vote volume and
+                margin movement, but we did not finish a turnout-variance analysis that was strong enough to publish as a
+                core finding. It remains an important next step, especially if the project expands to precinct-level data
+                or voter files.
+              </p>
+              <div class="evidence-chip-row">
+                <span class="evidence-chip">Future work</span>
+                <span class="evidence-chip">Data expansion</span>
+              </div>
+              <div class="results-note">
+                <strong>What would strengthen this answer?</strong> Better turnout-specific data, finer-grained geography,
+                and a dedicated turnout model separate from the volatility pipeline used in Milestone 4.
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section-blue">
+      <div class="container">
+        <h2>PersuasionScore Atlas</h2>
+        <p class="results-section-intro">
+          This is the final milestone-4 deliverable. The PersuasionScore uses only three ingredients, chosen for clarity
+          and interpretability in the final presentation.
+        </p>
+
+        <div class="score-component-grid">
+          <article class="score-component-card reveal-on-scroll">
+            <span class="score-weight">50%</span>
+            <h3>Persuadability</h3>
+            <p>
+              Diversity-threshold signal plus cluster volatility rate. This is the core answer to who looks movable.
+            </p>
+          </article>
+          <article class="score-component-card reveal-on-scroll delay-1">
+            <span class="score-weight">20%</span>
+            <h3>Electoral Weight</h3>
+            <p>
+              A softened version of within-state vote share. This keeps large counties important without letting them
+              completely dominate the score.
+            </p>
+          </article>
+          <article class="score-component-card reveal-on-scroll delay-2">
+            <span class="score-weight">30%</span>
+            <h3>Predicted Volatility</h3>
+            <p>
+              State-level out-of-fold Random Forest probability of high volatility. This captures how elastic a county
+              still looks in the final model.
+            </p>
+          </article>
+        </div>
+
+        <div class="spotlight-grid">
+          <article class="spotlight-card">
+            <span class="spotlight-state">PA state leader</span>
+            <h4>Philadelphia County</h4>
+            <div class="spotlight-score">PS = 0.871</div>
+            <p>Large urban persuasion/turnout hybrid target.</p>
+          </article>
+          <article class="spotlight-card">
+            <span class="spotlight-state">MI state leader</span>
+            <h4>Oakland County</h4>
+            <div class="spotlight-score">PS = 0.854</div>
+            <p>High-volume defensive hold with swing risk.</p>
+          </article>
+          <article class="spotlight-card">
+            <span class="spotlight-state">NC state leader</span>
+            <h4>Wake County</h4>
+            <div class="spotlight-score">PS = 0.821</div>
+            <p>Metro persuasion/turnout hybrid target.</p>
+          </article>
+        </div>
+
+        <figure class="figure-container results-figure reveal-on-scroll">
+          <img src="images/methods/enhanced_persuasion_3state_choropleth.png" alt="Three-state PersuasionScore choropleth for Pennsylvania, Michigan, and North Carolina." loading="lazy">
+          <figcaption>
+            Three-state PersuasionScore choropleth: darker counties rank higher within their own state&rsquo;s target map.
+          </figcaption>
+        </figure>
+
+        <figure class="figure-container results-figure reveal-on-scroll delay-1">
+          <img src="images/methods/enhanced_persuasion_top5_highlight.png" alt="Three-state highlight map showing the top five PersuasionScore counties in each state." loading="lazy">
+          <figcaption>
+            Spotlight map: this view is useful for storytelling, but the official interpretation remains state-specific.
+          </figcaption>
+        </figure>
+
+        <div class="results-technical-note reveal-on-scroll delay-2">
+          <strong>Technical note:</strong> PersuasionScore is normalized within state, so the tables below are the
+          official rankings. The combined three-state view is a spotlight, not a strict national leaderboard.
+        </div>
+
+        <div class="model-tabs persuasion-tabs reveal-on-scroll">
+          <div class="model-tab-nav">
+            <button class="model-tab-btn active" data-tab="persuasion-pa" type="button">Pennsylvania</button>
+            <button class="model-tab-btn" data-tab="persuasion-mi" type="button">Michigan</button>
+            <button class="model-tab-btn" data-tab="persuasion-nc" type="button">North Carolina</button>
+          </div>
+
+          <div class="model-tab-content active" id="persuasion-pa">
+            <figure class="figure-container results-figure">
+              <img src="images/methods/enhanced_persuasion_PA_top5.png" alt="Pennsylvania map highlighting the top five PersuasionScore counties." loading="lazy">
+              <figcaption>Pennsylvania top-5 persuasion targets.</figcaption>
+            </figure>
+            <div class="rankings-table-wrapper">
+              <table class="data-table rankings-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>County</th>
+                    <th>PersuasionScore</th>
+                    <th>P(high volatility)</th>
+                    <th>2024 D margin</th>
+                    <th>Why it matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Philadelphia County</td>
+                    <td>0.871</td>
+                    <td>0.744</td>
+                    <td class="value-positive">+58.8 pp</td>
+                    <td>Large urban persuasion/turnout hybrid target</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Delaware County</td>
+                    <td>0.807</td>
+                    <td>0.867</td>
+                    <td class="value-positive">+23.7 pp</td>
+                    <td>High-volume suburban transition county</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Allegheny County</td>
+                    <td>0.783</td>
+                    <td>0.849</td>
+                    <td class="value-positive">+20.3 pp</td>
+                    <td>High-volume defensive hold with swing risk</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Montgomery County</td>
+                    <td>0.771</td>
+                    <td>0.750</td>
+                    <td class="value-positive">+22.8 pp</td>
+                    <td>Affluent suburban transition county</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Lehigh County</td>
+                    <td>0.685</td>
+                    <td>0.748</td>
+                    <td class="value-positive">+2.7 pp</td>
+                    <td>Bilingual outreach bellwether county</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="model-tab-content" id="persuasion-mi">
+            <figure class="figure-container results-figure">
+              <img src="images/methods/enhanced_persuasion_MI_top5.png" alt="Michigan map highlighting the top five PersuasionScore counties." loading="lazy">
+              <figcaption>Michigan top-5 persuasion targets.</figcaption>
+            </figure>
+            <div class="rankings-table-wrapper">
+              <table class="data-table rankings-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>County</th>
+                    <th>PersuasionScore</th>
+                    <th>P(high volatility)</th>
+                    <th>2024 D margin</th>
+                    <th>Why it matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Oakland County</td>
+                    <td>0.854</td>
+                    <td>0.880</td>
+                    <td class="value-positive">+10.6 pp</td>
+                    <td>High-volume defensive hold</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Wayne County</td>
+                    <td>0.804</td>
+                    <td>0.700</td>
+                    <td class="value-positive">+29.0 pp</td>
+                    <td>Large urban persuasion/turnout hybrid target</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Washtenaw County</td>
+                    <td>0.781</td>
+                    <td>0.919</td>
+                    <td class="value-positive">+44.4 pp</td>
+                    <td>Education-driven turnout anchor</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Ingham County</td>
+                    <td>0.721</td>
+                    <td>0.795</td>
+                    <td class="value-positive">+29.7 pp</td>
+                    <td>College-centered persuasion and mobilization target</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Kent County</td>
+                    <td>0.716</td>
+                    <td>0.857</td>
+                    <td class="value-positive">+5.4 pp</td>
+                    <td>Suburban transition county</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="model-tab-content" id="persuasion-nc">
+            <figure class="figure-container results-figure">
+              <img src="images/methods/enhanced_persuasion_NC_top5.png" alt="North Carolina map highlighting the top five PersuasionScore counties." loading="lazy">
+              <figcaption>North Carolina top-5 persuasion targets.</figcaption>
+            </figure>
+            <div class="rankings-table-wrapper">
+              <table class="data-table rankings-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>County</th>
+                    <th>PersuasionScore</th>
+                    <th>P(high volatility)</th>
+                    <th>2024 D margin</th>
+                    <th>Why it matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Wake County</td>
+                    <td>0.821</td>
+                    <td>0.610</td>
+                    <td class="value-positive">+25.4 pp</td>
+                    <td>High-volume persuasion/turnout hybrid target</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Mecklenburg County</td>
+                    <td>0.776</td>
+                    <td>0.474</td>
+                    <td class="value-positive">+32.7 pp</td>
+                    <td>Metro defensive hold with future upside</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Lenoir County</td>
+                    <td>0.767</td>
+                    <td>0.918</td>
+                    <td class="value-negative">-6.8 pp</td>
+                    <td>Diverse rural warning signal</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Halifax County</td>
+                    <td>0.767</td>
+                    <td>0.954</td>
+                    <td class="value-positive">+17.7 pp</td>
+                    <td>High-volatility rural persuasion test case</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Richmond County</td>
+                    <td>0.747</td>
+                    <td>0.887</td>
+                    <td class="value-negative">-20.9 pp</td>
+                    <td>Diverse rural warning signal</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Conclusion, Limitations, and Future Work</h2>
+
+        <div class="content-block">
+          <h3>Non-Technical Summary</h3>
+          <p>
+            The project shows that county-level persuasion opportunity is real, but only when we respect local context.
+            The strongest counties for future Democratic attention are not the same in every swing state, and the best
+            signals often come from diversity, economic stress, housing pressure, and state-specific political
+            realignment rather than from a single national battleground formula.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h3>Key Discoveries and Real-World Impact</h3>
+          <ul class="bullet-list">
+            <li>Binary framing worked far better than five-class framing, which tells us that identifying high vs. low volatility is more actionable than over-classifying the middle.</li>
+            <li>The diversity threshold at <code>race_entropy_norm = 0.552</code> is the clearest empirical finding in the project.</li>
+            <li>Cross-state transfer fails, which means campaign strategy should be tailored to each state rather than copied across the map.</li>
+            <li>The final PersuasionScore translates the research into a county-level targeting product that can support social sharing, strategic planning, and future funding conversations.</li>
+          </ul>
+        </div>
+
+        <div class="callout-grid">
+          <article class="callout-card">
+            <div class="callout-tag">Limitations</div>
+            <h4>What this page does not claim</h4>
+            <ul class="bullet-list results-list-compact">
+              <li>The sample is still small at 250 counties across three states.</li>
+              <li>Cross-state transfer failure means the model is not a universal battleground engine.</li>
+              <li>PersuasionScore is a county-level targeting aid, not a causal model of voter behavior.</li>
+              <li>The turnout-variance question was not fully completed in the official pipeline.</li>
+              <li>We do not have voter-file or precinct-level personalization.</li>
+              <li>Demographic data can lag fast real-world population change.</li>
+            </ul>
+          </article>
+          <article class="callout-card">
+            <div class="callout-tag">Future Work</div>
+            <h4>What stronger funding would unlock</h4>
+            <ul class="bullet-list results-list-compact">
+              <li>Expand the framework to more swing states.</li>
+              <li>Add precinct-level or voter-file enrichment.</li>
+              <li>Build a dedicated turnout-targeting extension instead of stopping at persuasion.</li>
+              <li>Recalibrate the score for each new election cycle.</li>
+              <li>Test whether the county signals remain stable as the 2028 environment takes shape.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="results-note results-closing-note">
+          <strong>Bottom line:</strong> the project moved from descriptive analysis to a practical targeting framework.
+          That is why the final deliverable is a persuasion map, not just a model scorecard.
+        </div>
+      </div>
+    </section>
+
   </main>
-  
+
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-text">
-        &copy; 2026 Group 1 | <a href="https://github.com/AntoniCzolgowski/Data-Mining-Project-Group-1" target="_blank">GitHub Repository</a>
+        &copy; 2026 Group 1 |
+        <a href="https://github.com/AntoniCzolgowski/Data-Mining-Project-Group-1" target="_blank">GitHub Repository</a>
       </div>
       <div class="footer-links">
         <a href="index.html">Introduction</a>
         <a href="team.html">Team</a>
         <a href="proposal.html">Proposal</a>
-        <a href="eda.html">Data &amp; EDA</a>
+        <a href="methods.html">Methods</a>
       </div>
     </div>
   </footer>
-  
+
   <script src="js/main.js"></script>
 </body>
 </html>

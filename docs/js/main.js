@@ -102,39 +102,60 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(el);
   });
   
-  // ---------- Research Question Expand/Collapse (Future Feature) ----------
-  const questionItems = document.querySelectorAll('.question-item');
-  
-  questionItems.forEach(item => {
-    item.style.cursor = 'pointer';
-    item.addEventListener('click', function() {
-      const details = this.querySelector('.question-details');
-      if (details) {
-        details.classList.toggle('expanded');
+  // ---------- Research Question Expand/Collapse ----------
+  const questionToggles = document.querySelectorAll('.question-toggle');
+
+  questionToggles.forEach(toggle => {
+    const item = toggle.closest('.question-accordion-item');
+    const details = item ? item.querySelector('.question-details') : null;
+    if (!item || !details) return;
+
+    const syncAccordionState = (expanded) => {
+      item.classList.toggle('expanded', expanded);
+      details.classList.toggle('expanded', expanded);
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    };
+
+    syncAccordionState(item.classList.contains('expanded'));
+
+    toggle.addEventListener('click', function() {
+      const list = item.closest('.questions-list');
+      const shouldExpand = !item.classList.contains('expanded');
+
+      if (list) {
+        list.querySelectorAll('.question-accordion-item').forEach(otherItem => {
+          const otherToggle = otherItem.querySelector('.question-toggle');
+          const otherDetails = otherItem.querySelector('.question-details');
+          if (!otherToggle || !otherDetails) return;
+          otherItem.classList.remove('expanded');
+          otherDetails.classList.remove('expanded');
+          otherToggle.setAttribute('aria-expanded', 'false');
+        });
       }
+
+      syncAccordionState(shouldExpand);
     });
   });
   
   // ---------- Model Tab Switching (Methods Page) ----------
-  const tabBtns = document.querySelectorAll('.model-tab-btn');
-  if (tabBtns.length) {
+  const tabGroups = document.querySelectorAll('.model-tabs');
+  tabGroups.forEach(group => {
+    const tabBtns = group.querySelectorAll('.model-tab-btn');
+    const tabPanels = group.querySelectorAll('.model-tab-content');
+
     tabBtns.forEach(btn => {
       btn.addEventListener('click', function() {
         const targetId = this.getAttribute('data-tab');
 
-        // Deactivate all tabs and panels
         tabBtns.forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.model-tab-content').forEach(panel => {
-          panel.classList.remove('active');
-        });
+        tabPanels.forEach(panel => panel.classList.remove('active'));
 
-        // Activate clicked tab and its panel
         this.classList.add('active');
-        const target = document.getElementById(targetId);
+        const target = group.querySelector(`#${targetId}`);
         if (target) target.classList.add('active');
       });
     });
-  }
+  });
 
   // ---------- Scroll Reveal Animations (Methods Page) ----------
   const revealObserver = new IntersectionObserver((entries) => {
@@ -156,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ---------- Console Welcome Message ----------
-  console.log('%c🎓 CU Boulder Data Mining Project', 'font-size: 16px; font-weight: bold; color: #CFB87C;');
+  console.log('%cCU Boulder Data Mining Project', 'font-size: 16px; font-weight: bold; color: #CFB87C;');
   console.log('%cGroup 1: Sam Goodell, Will Creager, Antoni Czolgowski', 'font-size: 12px; color: #565A5C;');
   console.log('%cCSCI 5502 - Spring 2026', 'font-size: 12px; color: #565A5C;');
   

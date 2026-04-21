@@ -32,6 +32,17 @@ STATE_FIPS = {'PA': '42', 'MI': '26', 'NC': '37'}
 STATE_NAMES = {'PA': 'Pennsylvania', 'MI': 'Michigan', 'NC': 'North Carolina'}
 STATE_OOF_FOLDS = {'PA': 4, 'MI': 5, 'NC': 5}
 
+# Persuadability is defined here as a simple SHAP-informed linear blend of
+# directionally interpretable volatility predictors. We keep this version
+# linear for transparency, even though later SHAP/PDP work suggests some
+# features could be transformed to better capture nonlinear effects.
+PERSUADABILITY_LINEAR_FEATURES = {
+    'race_entropy_norm': {'weight': 0.40, 'direction': 'positive'},
+    'pct_below_poverty': {'weight': 0.25, 'direction': 'positive'},
+    'log_median_household_income': {'weight': 0.20, 'direction': 'negative'},
+    'log_population_density': {'weight': 0.15, 'direction': 'positive'},
+}
+
 # Weights for 5 sub-scores (sum = 1.0)
 # Competitiveness has been removed; remaining weights preserve the
 # original balance after renormalizing the prior 0.80 total.
@@ -44,9 +55,11 @@ W_MISFIT = 0.125
 # Persuasion-target score weights (sum = 1.0)
 # Keep this intentionally simple and interpretable:
 # persuadability, within-state vote importance, and predicted volatility.
-W_PS_PERSUADABILITY = 0.50
-W_PS_ELECTORAL_WEIGHT = 0.20
-W_PS_PREDICTED_VOL = 0.30
+# Predicted volatility carries half of the total weight, with the other half
+# split evenly across persuadability and electoral weight.
+W_PS_PERSUADABILITY = 0.25
+W_PS_ELECTORAL_WEIGHT = 0.25
+W_PS_PREDICTED_VOL = 0.50
 
 # -- 1. Load & Merge All Data ----------------------------------------------
 print("=" * 70)
@@ -100,6 +113,11 @@ df = df.merge(dim_cols, on='county_fips', how='left')
 df = df.merge(kmeans, on='county_fips', how='left')
 df = df.merge(preds_cols, on='county_fips', how='left')
 df = df.merge(old_priority_cols, on='county_fips', how='left')
+df = df.merge(
+    clf_df[['county_fips'] + list(PERSUADABILITY_LINEAR_FEATURES.keys())],
+    on='county_fips',
+    how='left'
+)
 
 print(f"   Merged dataset: {df.shape[0]} counties, {df.shape[1]} columns")
 assert df.shape[0] == 250, f"Expected 250 counties, got {df.shape[0]}"
@@ -189,26 +207,28 @@ print("[3/7] Computing score components...")
 
 scaler = MinMaxScaler()
 
-# --- S1: Persuadability Score (0.20) ---
-# Soft sigmoid on diversity threshold at 0.552
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+# --- S1: Persuadability Score ---
+# SHAP-informed linear blend of structural volatility predictors. Features
+# whose higher values push away from high volatility are inverted after
+# min-max scaling so the final 0-1 score always increases with persuadability.
+persuadability_terms = []
+print("   Persuadability feature mix:")
+for feature_name, feature_meta in PERSUADABILITY_LINEAR_FEATURES.items():
+    feature_weight = feature_meta['weight']
+    feature_direction = feature_meta['direction']
+    norm_col = f'{feature_name}_p_norm'
+    norm_values = scaler.fit_transform(df[[feature_name]]).ravel()
+    if feature_direction == 'negative':
+        norm_values = 1 - norm_values
+    df[norm_col] = norm_values
+    persuadability_terms.append(feature_weight * df[norm_col])
+    direction_label = 'direct' if feature_direction == 'positive' else 'inverse'
+    print(
+        f"      {feature_name:<24} weight={feature_weight:.2f} "
+        f"({direction_label})"
+    )
 
-diversity_signal = sigmoid((df['race_entropy_raw'].values - 0.552) * 10)
-
-# K-Means cluster volatility rates (from cluster_means analysis)
-# Cluster: mean vol_quintile -> convert to % high volatility estimate
-# Cluster 2 (Poor&Diverse): vol_quintile=4.61 -> ~86% high vol
-# Cluster 4 (Educated Urban): vol_quintile=3.69 -> ~73% high vol
-# Cluster 0 (High-Diversity Urban): vol_quintile=3.21 -> ~62% high vol
-# Cluster 1 (Affluent Stable): vol_quintile=3.0 -> ~49% high vol
-# Cluster 3 (Rural Stable): vol_quintile=2.44 -> ~26% high vol
-cluster_vol_rates = {2: 0.86, 4: 0.73, 0: 0.62, 1: 0.49, 3: 0.26}
-cluster_vol = df['kmeans_cluster_label'].map(cluster_vol_rates).values
-# Normalize cluster volatility rates to 0-1
-cluster_vol_norm = (cluster_vol - 0.26) / (0.86 - 0.26)
-
-df['S_persuadability'] = 0.60 * diversity_signal + 0.40 * cluster_vol_norm
+df['S_persuadability'] = np.sum(persuadability_terms, axis=0)
 
 # --- S2: Electoral Weight Score (0.25) ---
 # Share of each state's vote pool captured by the county,
@@ -815,10 +835,11 @@ for abbr in ['PA', 'MI', 'NC']:
             'Kent': (-170, -75),
         },
         'NC': {
-            'Wake': (130, 120),
+            'Wake': (-90, 120),
             'Mecklenburg': (-170, -115),
             'Lenoir': (110, -145),
-            'Halifax': (-70, 170),
+            'Halifax': (40, 115),
+            'Washington': (90, -95),
             'Richmond': (-180, 95),
         },
     }

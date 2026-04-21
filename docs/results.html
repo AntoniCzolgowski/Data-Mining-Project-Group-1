@@ -158,10 +158,12 @@
             </button>
             <div class="question-details expanded" id="rq1-details" role="region" aria-labelledby="rq1-toggle">
               <p class="question-summary">
-                Our final answer is the <strong>PersuasionScore</strong>, not the earlier ranking variants. It combines
-                persuadability, within-state electoral weight, and predicted volatility to rank counties inside each
-                state. The storytelling spotlight starts with Philadelphia County, Oakland County, and Wake County, but
-                the official rankings remain state-specific because the score is normalized within state.
+                Our final answer is the <strong>PersuasionScore</strong>, not the earlier ranking variants. In the final
+                scoring update, predicted volatility carries half the total weight, while the other half is split across
+                within-state electoral weight and a transparent persuadability blend built from diversity, poverty,
+                inverse income, and population density. The storytelling spotlight starts with Philadelphia County,
+                Oakland County, and Halifax County, but the official rankings remain state-specific because the score is
+                normalized within state.
               </p>
               <div class="evidence-chip-row">
                 <span class="evidence-chip">Classification</span>
@@ -172,24 +174,24 @@
                 <article class="spotlight-card">
                   <span class="spotlight-state">Pennsylvania leader</span>
                   <h4>Philadelphia County</h4>
-                  <div class="spotlight-score">PS = 0.871</div>
+                  <div class="spotlight-score">PS = 0.838</div>
                   <p>Large urban persuasion/turnout hybrid target with meaningful predicted volatility.</p>
                 </article>
                 <article class="spotlight-card">
                   <span class="spotlight-state">Michigan leader</span>
                   <h4>Oakland County</h4>
-                  <div class="spotlight-score">PS = 0.854</div>
+                  <div class="spotlight-score">PS = 0.797</div>
                   <p>High-volume suburban transition county with one of the strongest volatility signals in the state.</p>
                 </article>
                 <article class="spotlight-card">
                   <span class="spotlight-state">North Carolina leader</span>
-                  <h4>Wake County</h4>
-                  <div class="spotlight-score">PS = 0.821</div>
-                  <p>High-volume metro target where even small persuasion or turnout gains scale into large vote totals.</p>
+                  <h4>Halifax County</h4>
+                  <div class="spotlight-score">PS = 0.697</div>
+                  <p>Smaller county, but the strongest volatility signal in the state pushes it to the top of the updated score.</p>
                 </article>
               </div>
               <figure class="figure-container results-figure">
-                <img src="images/methods/enhanced_persuasion_top5_highlight.png" alt="Three-state map highlighting the top five PersuasionScore counties in each state." loading="lazy">
+                <img src="images/methods/enhanced_persuasion_top5_highlight.png?v=872d501" alt="Three-state map highlighting the top five PersuasionScore counties in each state." loading="lazy">
                 <figcaption>
                   PersuasionScore spotlight: the most strategically attractive counties are different in each state, even
                   when they share similar battleground labels.
@@ -577,20 +579,21 @@
       <div class="container">
         <h2>PersuasionScore Atlas</h2>
         <p class="results-section-intro">
-          This is the final milestone-4 deliverable. The PersuasionScore uses only three ingredients, chosen for clarity
-          and interpretability in the final presentation.
+          This is the final milestone-4 deliverable. The updated PersuasionScore uses three ingredients chosen for
+          clarity and interpretability, with state-specific predicted volatility now carrying the most weight.
         </p>
 
         <div class="score-component-grid">
           <article class="score-component-card reveal-on-scroll">
-            <span class="score-weight">50%</span>
+            <span class="score-weight">25%</span>
             <h3>Persuadability</h3>
             <p>
-              Diversity-threshold signal plus cluster volatility rate. This is the core answer to who looks movable.
+              Linear blend of racial diversity, poverty, inverse income, and population density. This is the transparent
+              answer to who looks movable.
             </p>
           </article>
           <article class="score-component-card reveal-on-scroll delay-1">
-            <span class="score-weight">20%</span>
+            <span class="score-weight">25%</span>
             <h3>Electoral Weight</h3>
             <p>
               A softened version of within-state vote share. This keeps large counties important without letting them
@@ -598,11 +601,11 @@
             </p>
           </article>
           <article class="score-component-card reveal-on-scroll delay-2">
-            <span class="score-weight">30%</span>
+            <span class="score-weight">50%</span>
             <h3>Predicted Volatility</h3>
             <p>
-              State-level out-of-fold Random Forest probability of high volatility. This captures how elastic a county
-              still looks in the final model.
+              State-level out-of-fold Random Forest probability of high volatility. This is now the largest component,
+              so repeatable swing behavior matters most in the final ranking.
             </p>
           </article>
         </div>
@@ -611,32 +614,32 @@
           <article class="spotlight-card">
             <span class="spotlight-state">PA state leader</span>
             <h4>Philadelphia County</h4>
-            <div class="spotlight-score">PS = 0.871</div>
+            <div class="spotlight-score">PS = 0.838</div>
             <p>Large urban persuasion/turnout hybrid target.</p>
           </article>
           <article class="spotlight-card">
             <span class="spotlight-state">MI state leader</span>
             <h4>Oakland County</h4>
-            <div class="spotlight-score">PS = 0.854</div>
-            <p>High-volume defensive hold with swing risk.</p>
+            <div class="spotlight-score">PS = 0.797</div>
+            <p>High-volume suburban transition county.</p>
           </article>
           <article class="spotlight-card">
             <span class="spotlight-state">NC state leader</span>
-            <h4>Wake County</h4>
-            <div class="spotlight-score">PS = 0.821</div>
-            <p>Metro persuasion/turnout hybrid target.</p>
+            <h4>Halifax County</h4>
+            <div class="spotlight-score">PS = 0.697</div>
+            <p>High-volatility rural persuasion test case.</p>
           </article>
         </div>
 
         <figure class="figure-container results-figure reveal-on-scroll">
-          <img src="images/methods/enhanced_persuasion_3state_choropleth.png" alt="Three-state PersuasionScore choropleth for Pennsylvania, Michigan, and North Carolina." loading="lazy">
+          <img src="images/methods/enhanced_persuasion_3state_choropleth.png?v=872d501" alt="Three-state PersuasionScore choropleth for Pennsylvania, Michigan, and North Carolina." loading="lazy">
           <figcaption>
             Three-state PersuasionScore choropleth: darker counties rank higher within their own state&rsquo;s target map.
           </figcaption>
         </figure>
 
         <figure class="figure-container results-figure reveal-on-scroll delay-1">
-          <img src="images/methods/enhanced_persuasion_top5_highlight.png" alt="Three-state highlight map showing the top five PersuasionScore counties in each state." loading="lazy">
+          <img src="images/methods/enhanced_persuasion_top5_highlight.png?v=872d501" alt="Three-state highlight map showing the top five PersuasionScore counties in each state." loading="lazy">
           <figcaption>
             Spotlight map: this view is useful for storytelling, but the official interpretation remains state-specific.
           </figcaption>
@@ -656,7 +659,7 @@
 
           <div class="model-tab-content active" id="persuasion-pa">
             <figure class="figure-container results-figure">
-              <img src="images/methods/enhanced_persuasion_PA_top5.png" alt="Pennsylvania map highlighting the top five PersuasionScore counties." loading="lazy">
+              <img src="images/methods/enhanced_persuasion_PA_top5.png?v=872d501" alt="Pennsylvania map highlighting the top five PersuasionScore counties." loading="lazy">
               <figcaption>Pennsylvania top-5 persuasion targets.</figcaption>
             </figure>
             <div class="rankings-table-wrapper">
@@ -675,31 +678,31 @@
                   <tr>
                     <td>1</td>
                     <td>Philadelphia County</td>
-                    <td>0.871</td>
+                    <td>0.838</td>
                     <td>0.744</td>
                     <td class="value-positive">+58.8 pp</td>
                     <td>Large urban persuasion/turnout hybrid target</td>
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td>Delaware County</td>
-                    <td>0.807</td>
-                    <td>0.867</td>
-                    <td class="value-positive">+23.7 pp</td>
-                    <td>High-volume suburban transition county</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
                     <td>Allegheny County</td>
-                    <td>0.783</td>
+                    <td>0.800</td>
                     <td>0.849</td>
                     <td class="value-positive">+20.3 pp</td>
                     <td>High-volume defensive hold with swing risk</td>
                   </tr>
                   <tr>
+                    <td>3</td>
+                    <td>Delaware County</td>
+                    <td>0.736</td>
+                    <td>0.867</td>
+                    <td class="value-positive">+23.7 pp</td>
+                    <td>High-volume suburban transition county</td>
+                  </tr>
+                  <tr>
                     <td>4</td>
                     <td>Montgomery County</td>
-                    <td>0.771</td>
+                    <td>0.690</td>
                     <td>0.750</td>
                     <td class="value-positive">+22.8 pp</td>
                     <td>Affluent suburban transition county</td>
@@ -707,7 +710,7 @@
                   <tr>
                     <td>5</td>
                     <td>Lehigh County</td>
-                    <td>0.685</td>
+                    <td>0.633</td>
                     <td>0.748</td>
                     <td class="value-positive">+2.7 pp</td>
                     <td>Bilingual outreach bellwether county</td>
@@ -719,7 +722,7 @@
 
           <div class="model-tab-content" id="persuasion-mi">
             <figure class="figure-container results-figure">
-              <img src="images/methods/enhanced_persuasion_MI_top5.png" alt="Michigan map highlighting the top five PersuasionScore counties." loading="lazy">
+              <img src="images/methods/enhanced_persuasion_MI_top5.png?v=872d501" alt="Michigan map highlighting the top five PersuasionScore counties." loading="lazy">
               <figcaption>Michigan top-5 persuasion targets.</figcaption>
             </figure>
             <div class="rankings-table-wrapper">
@@ -738,15 +741,15 @@
                   <tr>
                     <td>1</td>
                     <td>Oakland County</td>
-                    <td>0.854</td>
+                    <td>0.797</td>
                     <td>0.880</td>
                     <td class="value-positive">+10.6 pp</td>
-                    <td>High-volume defensive hold</td>
+                    <td>High-volume suburban transition county</td>
                   </tr>
                   <tr>
                     <td>2</td>
                     <td>Wayne County</td>
-                    <td>0.804</td>
+                    <td>0.793</td>
                     <td>0.700</td>
                     <td class="value-positive">+29.0 pp</td>
                     <td>Large urban persuasion/turnout hybrid target</td>
@@ -754,26 +757,26 @@
                   <tr>
                     <td>3</td>
                     <td>Washtenaw County</td>
-                    <td>0.781</td>
+                    <td>0.720</td>
                     <td>0.919</td>
                     <td class="value-positive">+44.4 pp</td>
                     <td>Education-driven turnout anchor</td>
                   </tr>
                   <tr>
                     <td>4</td>
-                    <td>Ingham County</td>
-                    <td>0.721</td>
-                    <td>0.795</td>
-                    <td class="value-positive">+29.7 pp</td>
-                    <td>College-centered persuasion and mobilization target</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
                     <td>Kent County</td>
-                    <td>0.716</td>
+                    <td>0.712</td>
                     <td>0.857</td>
                     <td class="value-positive">+5.4 pp</td>
                     <td>Suburban transition county</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Ingham County</td>
+                    <td>0.654</td>
+                    <td>0.795</td>
+                    <td class="value-positive">+29.7 pp</td>
+                    <td>College-centered persuasion and mobilization target</td>
                   </tr>
                 </tbody>
               </table>
@@ -782,7 +785,7 @@
 
           <div class="model-tab-content" id="persuasion-nc">
             <figure class="figure-container results-figure">
-              <img src="images/methods/enhanced_persuasion_NC_top5.png" alt="North Carolina map highlighting the top five PersuasionScore counties." loading="lazy">
+              <img src="images/methods/enhanced_persuasion_NC_top5.png?v=872d501" alt="North Carolina map highlighting the top five PersuasionScore counties." loading="lazy">
               <figcaption>North Carolina top-5 persuasion targets.</figcaption>
             </figure>
             <div class="rankings-table-wrapper">
@@ -800,40 +803,40 @@
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>Wake County</td>
-                    <td>0.821</td>
-                    <td>0.610</td>
-                    <td class="value-positive">+25.4 pp</td>
-                    <td>High-volume persuasion/turnout hybrid target</td>
+                    <td>Halifax County</td>
+                    <td>0.697</td>
+                    <td>0.954</td>
+                    <td class="value-positive">+17.7 pp</td>
+                    <td>High-volatility rural persuasion test case</td>
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td>Mecklenburg County</td>
-                    <td>0.776</td>
-                    <td>0.474</td>
-                    <td class="value-positive">+32.7 pp</td>
-                    <td>Metro defensive hold with future upside</td>
+                    <td>Wake County</td>
+                    <td>0.689</td>
+                    <td>0.610</td>
+                    <td class="value-positive">+25.4 pp</td>
+                    <td>High-volume metro persuasion/turnout hybrid target</td>
                   </tr>
                   <tr>
                     <td>3</td>
                     <td>Lenoir County</td>
-                    <td>0.767</td>
+                    <td>0.688</td>
                     <td>0.918</td>
                     <td class="value-negative">-6.8 pp</td>
                     <td>Diverse rural warning signal</td>
                   </tr>
                   <tr>
                     <td>4</td>
-                    <td>Halifax County</td>
-                    <td>0.767</td>
-                    <td>0.954</td>
-                    <td class="value-positive">+17.7 pp</td>
-                    <td>High-volatility rural persuasion test case</td>
+                    <td>Washington County</td>
+                    <td>0.672</td>
+                    <td>0.961</td>
+                    <td class="value-positive">+6.2 pp</td>
+                    <td>Small-county volatility hotspot</td>
                   </tr>
                   <tr>
                     <td>5</td>
                     <td>Richmond County</td>
-                    <td>0.747</td>
+                    <td>0.669</td>
                     <td>0.887</td>
                     <td class="value-negative">-20.9 pp</td>
                     <td>Diverse rural warning signal</td>
